@@ -28,18 +28,25 @@ public class LoginController implements Initializable {
     public PasswordField passwordField;
     @FXML
     public Label errorMessageLabel;
+    @FXML
+    public Button logInBtn;
 
     public void logInAttempt(ActionEvent event) throws IOException {
         verifyLogIn(event);
-        errorMessageLabel.setText("clicked");
+        //errorMessageLabel.setText("clicked");
+
+
 
     }
 
-    private void verifyLogIn(ActionEvent e) throws IOException {
+    public void verifyLogIn(ActionEvent e) throws IOException {
         Main main = new Main();
         if(userNameField.getText().toString().equals("test") &&
                 passwordField.getText().toString().equals("test")){
             main.changeScene("successfulLogin.fxml", e);
+        }else{
+            errorMessageLabel.setText("Incorrect username or password");
+            logInBtn.setText("Retry?");
         }
     }
 
