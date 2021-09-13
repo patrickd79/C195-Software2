@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 
 public class SuccessfulLoginController {
     @FXML
-    private TextField successfulLoginTextArea;
+    public TextField successfulLoginTextArea;
 
 
     public void initialize() {
