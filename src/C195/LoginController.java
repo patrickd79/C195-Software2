@@ -13,20 +13,20 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
+import java.time.format.TextStyle;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-
-
-    public LoginController(){
-
-    }
-
+    @FXML
+    public Label languageDisplayLabel;
     @FXML
     public TextField userNameField;
     @FXML
@@ -35,6 +35,20 @@ public class LoginController implements Initializable {
     public Label errorMessageLabel;
     @FXML
     public Button logInBtn;
+    public String language = Locale.getDefault().toLanguageTag();
+    public String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
+            Locale.getDefault());
+
+    public LoginController(){
+    }
+
+    public void setLanguageDisplayLabel(){
+        languageDisplayLabel.setText(zone + " : " + language);
+    }
+
+    public void setAppLanguage(){
+        //need to write logic to translate to users language
+    }
 
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
@@ -62,6 +76,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        setLanguageDisplayLabel();
     }
 }

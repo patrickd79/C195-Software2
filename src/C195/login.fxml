@@ -11,14 +11,14 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #6f92b3;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.LoginController">
     <left>
-        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="310.0" prefWidth="160.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutY="59.0" text="Username" textFill="#e6e6e6" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="75.0">
+                <Label alignment="CENTER" layoutY="59.0" text="Username" textFill="#e6e6e6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
                     <font>
                         <Font name="Avenir Next Bold" size="18.0" />
                     </font>
                 </Label>
-                <Label layoutY="160.0" text="Password" textFill="#e6e6e6" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="44.0" AnchorPane.topAnchor="125.0">
+                <Label alignment="CENTER" layoutY="160.0" text="Password" textFill="#e6e6e6" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0">
                     <font>
                         <Font name="Avenir Next Bold" size="18.0" />
                     </font>
@@ -29,12 +29,12 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <TextField fx:id="userNameField" style="-fx-background-color: d6d6d6;" AnchorPane.topAnchor="75.0">
+                <TextField fx:id="userNameField" prefHeight="26.0" prefWidth="304.0" promptText="Username" style="-fx-background-color: d6d6d6;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="75.0">
                     <font>
-                        <Font size="18.0" />
+                        <Font name="System Bold" size="18.0" />
                     </font>
                 </TextField>
-                <PasswordField fx:id="passwordField" style="-fx-background-color: d6d6d6;" AnchorPane.topAnchor="125.0">
+                <PasswordField fx:id="passwordField" prefHeight="26.0" prefWidth="303.0" promptText="Password" style="-fx-background-color: d6d6d6;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="125.0">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -44,21 +44,26 @@
                         <Font size="24.0" />
                     </font>
                 </Button>
-                <Label fx:id="errorMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="5.0" style="-fx-background-color: gray;" text="test" textAlignment="JUSTIFY" textFill="#d51010" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                <Label fx:id="errorMessageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="5.0" style="-fx-background-color: gray;" text="test" textAlignment="JUSTIFY" textFill="#d51010" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
                     <font>
                         <Font name="Avenir Next Bold" size="14.0" />
                     </font>
                 </Label>
+            <Label fx:id="languageDisplayLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="47.0" style="-fx-background-color: blue; -fx-text-fill: white;" text="language" textFill="#e9dede" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="47.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
             </children>
             <BorderPane.margin>
-                <Insets bottom="100.0" right="240.0" />
+                <Insets bottom="100.0" right="20.0" />
             </BorderPane.margin>
         </AnchorPane>
     </center>
     <top>
         <AnchorPane prefHeight="82.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="88.0" prefWidth="600.0" text="Scheduling Authentication" textFill="#d6d6d6" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="88.0" prefWidth="600.0" text="Scheduling Log In" textFill="#d6d6d6" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <font>
                         <Font name="Avenir Next Bold" size="24.0" />
                     </font>
