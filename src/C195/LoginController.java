@@ -11,9 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +21,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-
+    @FXML
+    public Label scheduleLogInLabel;
     @FXML
     public Label languageDisplayLabel;
     @FXML
@@ -35,27 +33,45 @@ public class LoginController implements Initializable {
     public Label errorMessageLabel;
     @FXML
     public Button logInBtn;
-    public String language = Locale.getDefault().toLanguageTag();
+    //public String userLanguage = Locale.getDefault().getDisplayLanguage();
+    public String userLanguage = "French";
+    public boolean french = false;
     public String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
             Locale.getDefault());
+
+
 
     public LoginController(){
     }
 
     public void setLanguageDisplayLabel(){
-        languageDisplayLabel.setText(zone + " : " + language);
+        languageDisplayLabel.setText(zone + " : " + userLanguage);
     }
 
-    public void setAppLanguage(){
+    public void setAppLanguage( String userLanguage){
         //need to write logic to translate to users language
+        if(userLanguage.equals("French")) {
+            french = true;
+        }
+    }
+    public void setScheduleLogInLabel(){
+        if(french){
+            scheduleLogInLabel.setText("Se Connecter");
+        }
     }
 
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
             changeScene("successfulLogin.fxml", event);
         }else {
-            errorMessageLabel.setText("Incorrect username or password");
-            logInBtn.setText("Retry?");
+            if(!french){
+                errorMessageLabel.setText("Incorrect username or password");
+                logInBtn.setText("Retry?");
+            }else{
+                errorMessageLabel.setText("Identifiant ou mot de passe incorrect");
+                logInBtn.setText("Réessayez?");
+            }
+
         }
     }
 
@@ -73,9 +89,10 @@ public class LoginController implements Initializable {
         window.show();
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguageDisplayLabel();
+        setAppLanguage(userLanguage);
+        setScheduleLogInLabel();
     }
 }

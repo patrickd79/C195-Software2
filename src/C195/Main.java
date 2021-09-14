@@ -11,10 +11,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.format.TextStyle;
+import java.util.Locale;
 
 import static javafx.fxml.FXMLLoader.*;
 
 public class Main extends Application {
+
+    //public String userLanguage = Locale.getDefault().getDisplayLanguage();
+    public String userLanguage = "French";
+    public boolean french = false;
+    public String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
+            Locale.getDefault());
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -26,7 +35,12 @@ public class Main extends Application {
         // Build the scene graph
         Scene scene = new Scene(parent);
         // Display window using the scene graph
-        stage.setTitle("Scheduling Application");
+        if(french){
+            stage.setTitle("Demande de Planification");
+        }else{
+            stage.setTitle("Scheduling Application");
+        }
+
         stage.setScene(scene);
         stage.show();
     }
