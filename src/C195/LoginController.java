@@ -12,12 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
-import java.time.ZoneId;
-import java.time.format.TextStyle;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -33,46 +29,25 @@ public class LoginController implements Initializable {
     public Label errorMessageLabel;
     @FXML
     public Button logInBtn;
-    //public String userLanguage = Locale.getDefault().getDisplayLanguage();
-    public String userLanguage = "French";
-    public boolean french = false;
-    public String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
-            Locale.getDefault());
-
-
 
     public LoginController(){
     }
 
     public void setLanguageDisplayLabel(){
-        languageDisplayLabel.setText(zone + " : " + userLanguage);
+        languageDisplayLabel.setText(Main.zone + " : " + Main.userLanguage + " : " + Main.userCountry);
     }
 
-    public void setAppLanguage( String userLanguage){
-        //need to write logic to translate to users language
-        if(userLanguage.equals("French")) {
-            french = true;
-        }
-    }
     public void setScheduleLogInLabel(){
-        if(french){
-            scheduleLogInLabel.setText("Se Connecter");
-        }
+
     }
 
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
             changeScene("successfulLogin.fxml", event);
         }else {
-            if(!french){
-                errorMessageLabel.setText("Incorrect username or password");
-                logInBtn.setText("Retry?");
-            }else{
-                errorMessageLabel.setText("Identifiant ou mot de passe incorrect");
-                logInBtn.setText("Réessayez?");
+            errorMessageLabel.setText(Main.resourceBundle.getString("IncorrectUsernameOrPassword"));
+                logInBtn.setText(Main.resourceBundle.getString("Retry"));
             }
-
-        }
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
@@ -92,7 +67,6 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguageDisplayLabel();
-        setAppLanguage(userLanguage);
         setScheduleLogInLabel();
     }
 }

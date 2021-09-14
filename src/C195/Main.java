@@ -9,42 +9,33 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Locale;
-
-import static javafx.fxml.FXMLLoader.*;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
-    //public String userLanguage = Locale.getDefault().getDisplayLanguage();
-    public String userLanguage = "French";
-    public boolean french = false;
-    public String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
+    public static String userLanguage = Locale.getDefault().getLanguage();
+    public static String userCountry = Locale.getDefault().getCountry();
+    public static String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
             Locale.getDefault());
+    public static Locale locale = new Locale(userLanguage, userCountry);
+    public static ResourceBundle resourceBundle = ResourceBundle.getBundle("C195/Bundle", locale);
 
     @Override
     public void start(Stage stage) throws Exception{
-
         // Load the FXML file
         Parent parent = FXMLLoader.load(
                 getClass().getResource("login.fxml"));
-
         // Build the scene graph
         Scene scene = new Scene(parent);
         // Display window using the scene graph
-        if(french){
-            stage.setTitle("Demande de Planification");
-        }else{
-            stage.setTitle("Scheduling Application");
-        }
-
+        stage.setTitle(resourceBundle.getString("SchedulingApplication"));
         stage.setScene(scene);
         stage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
