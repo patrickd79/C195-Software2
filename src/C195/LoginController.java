@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -29,6 +30,10 @@ public class LoginController implements Initializable {
     public Label errorMessageLabel;
     @FXML
     public Button logInBtn;
+    @FXML
+    public Label userNameLabel;
+    @FXML
+    public Label passwordLabel;
 
     public LoginController(){
     }
@@ -37,7 +42,13 @@ public class LoginController implements Initializable {
         languageDisplayLabel.setText(Main.zone + " : " + Main.userLanguage + " : " + Main.userCountry);
     }
 
-    public void setScheduleLogInLabel(){
+    public void setLabels(){
+        scheduleLogInLabel.setText(Main.resourceBundle.getString("SchedulingApplication"));
+        logInBtn.setText(Main.resourceBundle.getString("login"));
+        userNameLabel.setText(Main.resourceBundle.getString("username"));
+        passwordLabel.setText(Main.resourceBundle.getString("password"));
+
+
 
     }
 
@@ -51,8 +62,8 @@ public class LoginController implements Initializable {
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
-        if(userNameField.getText().toString().equals("test") &&
-                passwordField.getText().toString().equals("test")) return true;
+        if(userNameField.getText().toString().equals(Main.resourceBundle.getString("test")) &&
+                passwordField.getText().toString().equals(Main.resourceBundle.getString("test"))) return true;
         return false;
     }
 
@@ -67,6 +78,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguageDisplayLabel();
-        setScheduleLogInLabel();
+        setLabels();
+
     }
 }

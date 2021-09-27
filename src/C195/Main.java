@@ -19,13 +19,27 @@ public class Main extends Application {
 
     public static String userLanguage = Locale.getDefault().getLanguage();
     public static String userCountry = Locale.getDefault().getCountry();
+    //public static String userLanguage = "fr";
+    //public static String userCountry = "CA";
     public static String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
             Locale.getDefault());
-    public static Locale locale = new Locale(userLanguage, userCountry);
-    public static ResourceBundle resourceBundle = ResourceBundle.getBundle("C195/Bundle", locale);
+    //public static Locale locale = new Locale(userLanguage, userCountry);
+    public static ResourceBundle resourceBundle;
+    public static ResourceBundle french = ResourceBundle.getBundle("C195/Bundle", new Locale("fr", "CA") );
+    public static ResourceBundle english = ResourceBundle.getBundle("C195/Bundle", new Locale("en", "US") );
+
+    public ResourceBundle setResourceBundle(String userLanguage){
+        if(userLanguage.equals("fr")){
+            resourceBundle = french;
+        }else{
+            resourceBundle = english;
+        }
+        return resourceBundle;
+    }
 
     @Override
     public void start(Stage stage) throws Exception{
+        setResourceBundle(userLanguage);
         // Load the FXML file
         Parent parent = FXMLLoader.load(
                 getClass().getResource("login.fxml"));
