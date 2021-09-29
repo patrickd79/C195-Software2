@@ -2,6 +2,7 @@
 
 package C195;
 
+import C195.Helper.JDBC;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+
 
     public static String userLanguage = Locale.getDefault().getLanguage();
     public static String userCountry = Locale.getDefault().getCountry();
@@ -39,6 +41,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
+        JDBC.openConnection();
         setResourceBundle(userLanguage);
         // Load the FXML file
         Parent parent = FXMLLoader.load(
