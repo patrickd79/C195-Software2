@@ -41,7 +41,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception{
-        JDBC.openConnection();
         setResourceBundle(userLanguage);
         // Load the FXML file
         Parent parent = FXMLLoader.load(

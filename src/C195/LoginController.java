@@ -1,5 +1,6 @@
 package C195;
 
+import C195.Helper.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,6 +56,7 @@ public class LoginController implements Initializable {
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
             changeScene("successfulLogin.fxml", event);
+            //JDBC.openConnection();
         }else {
             errorMessageLabel.setText(Main.resourceBundle.getString("IncorrectUsernameOrPassword"));
                 logInBtn.setText(Main.resourceBundle.getString("Retry"));
@@ -62,8 +64,8 @@ public class LoginController implements Initializable {
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
-        if(userNameField.getText().toString().equals(Main.resourceBundle.getString("test")) &&
-                passwordField.getText().toString().equals(Main.resourceBundle.getString("test"))) return true;
+        if(userNameField.getText().toString().equals("test") &&
+                passwordField.getText().toString().equals("test")) return true;
         return false;
     }
 
