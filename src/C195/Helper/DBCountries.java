@@ -4,9 +4,8 @@ import C195.Entities.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.Instant;
 
 public class DBCountries {
 
@@ -32,8 +31,9 @@ public class DBCountries {
         return countryList;
     }
 
-    public static void addCountry(int id, String name){
-        String sql = "INSERT into Countries(Country_ID, Country) Values("+ id +", '"+name+"');";
+    /*public static void addCountry(String name, Date createdDate){
+
+        String sql = "INSERT into Countries(Country, Create_Date) Values('"+name+"', '"+createdDate+"');";
         try {
             //prepare the sql stmt
             PreparedStatement countryPS = JDBC.getConnection().prepareStatement(sql);
@@ -42,5 +42,5 @@ public class DBCountries {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-    }
+    }*/
 }

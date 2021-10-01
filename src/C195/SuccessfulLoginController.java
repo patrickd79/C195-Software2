@@ -9,6 +9,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Locale;
 
 public class SuccessfulLoginController {
@@ -33,8 +37,10 @@ public class SuccessfulLoginController {
         JDBC.openConnection();
         //get the connection object to use in queries
         //connection = JDBC.getConnection();
-        //DBCountries.addCountry(2, "Britain");
-        printCountries();
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        //DBCountries.addCountry("Britain", sqlDate);
+        //printCountries();
         JDBC.closeConnection();
 
     //don't forget to close the connection!

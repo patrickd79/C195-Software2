@@ -1,32 +1,33 @@
 package C195.Entities;
 
-public class Country {
-    private int countryID;
-    private String countryName;
+public class FLDivision {
+    private int divisionID;
+    private String division;
     private String createdDate;
     private String createdBy;
     private String lastUpdated;
     private String lastUpdatedBy;
+    private int countryID;//fk
 
-    public Country(int countryID, String countryName){
-        this.countryID = countryID;
-        this.countryName = countryName;
+
+
+    public FLDivision() {
     }
 
-    public int getCountryID() {
-        return countryID;
+    public int getDivisionID() {
+        return divisionID;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setDivisionID(int divisionID) {
+        this.divisionID = divisionID;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getDivision() {
+        return division;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setDivision(String division) {
+        this.division = division;
     }
 
     public String getCreatedDate() {
@@ -59,5 +60,13 @@ public class Country {
 
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    public int getCountryID() {
+        return countryID;
+    }
+
+    public void setCountryID(int countryID) {
+        this.countryID = countryID;
     }
 }
