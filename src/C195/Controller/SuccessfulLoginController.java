@@ -1,4 +1,4 @@
-package C195;
+package C195.Controller;
 
 import C195.Entities.Country;
 import C195.Helper.DBCountries;
@@ -6,6 +6,7 @@ import C195.Helper.JDBC;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
@@ -16,8 +17,9 @@ import java.util.Date;
 import java.util.Locale;
 
 public class SuccessfulLoginController {
+
     @FXML
-    public TextField successfulLoginTextArea;
+    public Button addAppointmentBtn;
     public Connection connection;
 
     //get all countries and print out
@@ -27,8 +29,6 @@ public class SuccessfulLoginController {
             System.out.println(country.getCountryID() +" "+ country.getCountryName());
         }
     }
-
-
 
     public void initialize() {
     //System.out.println(Locale.getDefault().toString());

@@ -1,6 +1,6 @@
-package C195;
+package C195.Controller;
 
-import C195.Helper.JDBC;
+import C195.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -48,15 +47,11 @@ public class LoginController implements Initializable {
         logInBtn.setText(Main.resourceBundle.getString("login"));
         userNameLabel.setText(Main.resourceBundle.getString("username"));
         passwordLabel.setText(Main.resourceBundle.getString("password"));
-
-
-
     }
 
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
             changeScene("successfulLogin.fxml", event);
-            //JDBC.openConnection();
         }else {
             errorMessageLabel.setText(Main.resourceBundle.getString("IncorrectUsernameOrPassword"));
                 logInBtn.setText(Main.resourceBundle.getString("Retry"));
@@ -64,9 +59,8 @@ public class LoginController implements Initializable {
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
-        if(userNameField.getText().toString().equals("test") &&
-                passwordField.getText().toString().equals("test")) return true;
-        return false;
+        return userNameField.getText().toString().equals("test") &&
+                passwordField.getText().toString().equals("test");
     }
 
     public void changeScene(String s, ActionEvent e) throws IOException {
@@ -81,6 +75,5 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguageDisplayLabel();
         setLabels();
-
     }
 }
