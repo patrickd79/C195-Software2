@@ -1,4 +1,4 @@
-package C195.Controller;
+package C195;
 
 import C195.Main;
 import javafx.event.ActionEvent;
@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class LoginController implements Initializable {
     @FXML

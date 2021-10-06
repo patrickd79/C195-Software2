@@ -47,8 +47,7 @@ public class Main extends Application {
         //set the resource bundle to use for the current user's experience
         setResourceBundle(userLanguage);
         // Load the FXML file
-        Parent parent = FXMLLoader.load(
-                getClass().getResource("View/login.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("login.fxml"));
         // Build the scene graph
         Scene scene = new Scene(parent);
         // Display window using the scene graph
