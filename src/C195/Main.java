@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -46,6 +47,9 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception{
         //set the resource bundle to use for the current user's experience
         setResourceBundle(userLanguage);
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        System.out.println(sqlDate.toString());
         // Load the FXML file
         Parent parent = FXMLLoader.load(getClass().getResource("login.fxml"));
         // Build the scene graph

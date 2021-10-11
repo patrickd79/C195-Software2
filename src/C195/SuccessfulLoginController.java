@@ -41,7 +41,7 @@ public class SuccessfulLoginController {
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         //DBCountries.addCountry("Britain", sqlDate);
         //printCountries();
-        JDBC.closeConnection();
+
 
     //don't forget to close the connection!
 

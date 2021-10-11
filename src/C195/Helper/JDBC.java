@@ -5,7 +5,11 @@ import java.sql.DriverManager;
 
 public abstract class JDBC {
     private static final String DBName = "client_schedule";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DBName + "?connectionTimeZone = SERVER";
+    //private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DBName + "?connectionTimeZone = SERVER";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DBName + "?connectionTimeZone = UTC";
+
+    //jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+
     private static final String username = "sqlUser";
     private static final String password = "Passw0rd!";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
