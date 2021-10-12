@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.AddAppointmentController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.AddAppointmentController">
    <children>
-      <Label layoutX="107.0" layoutY="104.0" text="Add Appointment" />
+      <Label layoutX="235.0" layoutY="28.0" text="Add Appointment" />
+      <Button layoutX="449.0" layoutY="347.0" mnemonicParsing="false" text="Add Appointment" />
+      <TextField fx:id="addAppointmentTitleField" layoutX="14.0" layoutY="71.0" promptText="Title" />
+      <TextField fx:id="addAppointmentDescField" layoutX="14.0" layoutY="139.0" promptText="Description" />
+      <TextField fx:id="addAppointmentLocationField" layoutX="10.0" layoutY="200.0" promptText="Location" />
+      <TextField fx:id="addAppointmentTypeField" layoutX="10.0" layoutY="264.0" promptText="Type" />
+      <DatePicker fx:id="addAppointmentStartDate" layoutX="399.0" layoutY="71.0" promptText="Start" />
+      <DatePicker fx:id="addAppointmentEndDate" layoutX="399.0" layoutY="200.0" promptText="End" />
+      <TextField fx:id="addAppointmentCustIDField" layoutX="211.0" layoutY="71.0" promptText="Customer ID" />
+      <TextField fx:id="addAppointmentUserIDField" layoutX="211.0" layoutY="139.0" promptText="User ID" />
+      <TextField fx:id="addAppointmentContactIDField" layoutX="211.0" layoutY="200.0" promptText="Contact ID" />
+      <Label layoutX="12.0" layoutY="330.0" prefHeight="42.0" prefWidth="359.0" />
    </children>
 </AnchorPane>

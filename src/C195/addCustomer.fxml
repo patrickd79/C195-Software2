@@ -10,7 +10,7 @@
    <children>
       <Label layoutX="47.0" layoutY="21.0" text="Add Customer" />
       <ComboBox fx:id="addCustomerComboDivId" layoutX="379.0" layoutY="200.0" prefWidth="150.0" promptText="First Level Div" />
-      <ComboBox fx:id="addCustomerComboCountry" layoutX="379.0" layoutY="91.0" prefWidth="150.0" promptText="Country" />
+      <ComboBox fx:id="addCustomerComboCountry" layoutX="379.0" layoutY="91.0" onAction="#populateComboBoxDivId" prefWidth="150.0" promptText="Country" />
       <TextField fx:id="custNameField" layoutX="43.0" layoutY="79.0" promptText="Customer Name" />
       <TextField fx:id="custAddressField" layoutX="43.0" layoutY="129.0" promptText="Street Address" />
       <TextField fx:id="custPostalCodeField" layoutX="43.0" layoutY="175.0" promptText="Postal Code" />

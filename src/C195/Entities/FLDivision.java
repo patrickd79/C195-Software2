@@ -14,6 +14,11 @@ public class FLDivision {
     public FLDivision() {
     }
 
+    public FLDivision(int divId, String divName) {
+        this.divisionID = divId;
+        this.division = divName;
+    }
+
     public int getDivisionID() {
         return divisionID;
     }

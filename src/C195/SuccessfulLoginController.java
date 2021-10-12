@@ -1,9 +1,5 @@
 package C195;
 
-import C195.Entities.Country;
-import C195.Helper.DBCountries;
-import C195.Helper.JDBC;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,19 +18,11 @@ public class SuccessfulLoginController {
     public Button addAppointmentBtn;
     public Connection connection;
 
-    //get all countries and print out
-    public void printCountries() {
-        ObservableList<Country> countries = DBCountries.getAllCountries();
-        for (Country country : countries) {
-            System.out.println(country.getCountryID() +" "+ country.getCountryName());
-        }
-    }
-
     public void initialize() {
     //System.out.println(Locale.getDefault().toString());
     //successfulLoginTextArea.setText(Locale.getDefault().toString());
         //open a connection to the DB
-        JDBC.openConnection();
+        //JDBC.openConnection();
         //get the connection object to use in queries
         //connection = JDBC.getConnection();
         Date date = new Date();
@@ -74,6 +62,14 @@ public class SuccessfulLoginController {
         window.setScene(addAppointmentScene);
         window.show();
     }
+
+    //get all countries and print out
+    /*public void printCountries() {
+        ObservableList<Country> countries = DBCountries.getAllCountries();
+        for (Country country : countries) {
+            System.out.println(country.getCountryID() +" "+ country.getCountryName());
+        }
+    }*/
 
 
 
