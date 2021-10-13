@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Date;
 
-public class SuccessfulLoginController {
+public class MainMenuController {
 
     @FXML
     public Button addAppointmentBtn;
@@ -45,14 +45,12 @@ public class SuccessfulLoginController {
         window.show();
     }
 
-    public void openAddPartForm(ActionEvent event) throws IOException {
-        Parent addPartWindow = FXMLLoader.load(getClass().getResource("addPart.fxml"));
-        Scene addPartScene = new Scene(addPartWindow);
+    public void goToUpdateCustomerWindow(ActionEvent event) throws IOException {
+        Parent updateCustomerWindow = FXMLLoader.load(getClass().getResource("chooseCustomerToUpdate.fxml"));
+        Scene updateCustomerScene = new Scene(updateCustomerWindow);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        addPartScene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
-        window.setScene(addPartScene);
+        window.setScene(updateCustomerScene);
         window.show();
-
     }
 
     public void goToAddAppointmentWindow(ActionEvent event) throws IOException {
@@ -60,6 +58,14 @@ public class SuccessfulLoginController {
         Scene addAppointmentScene = new Scene(addAppointmentWindow);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(addAppointmentScene);
+        window.show();
+    }
+
+    public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
+        Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("updateAppointment.fxml"));
+        Scene updateAppointmentScene = new Scene(updateAppointmentWindow);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(updateAppointmentScene);
         window.show();
     }
 

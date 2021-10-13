@@ -17,6 +17,19 @@ public class Customer {
 
     }
 
+    public Customer(int customer_ID, String customer_Name, String address, String postalCode, String phone, String createdDate, String createdBy, String lastUpdate, String lastUpdatedBy, int divisionID) {
+        this.customer_ID = customer_ID;
+        this.customer_Name = customer_Name;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.divisionID = divisionID;
+    }
+
     public int getCustomer_ID() {
         return customer_ID;
     }

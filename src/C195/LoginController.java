@@ -52,7 +52,7 @@ public class LoginController implements Initializable {
 
     public void logInAttempt(ActionEvent event) throws IOException {
         if(verifyLogIn(event)){
-            changeScene("successfulLogin.fxml", event);
+            changeScene("mainMenu.fxml", event);
         }else {
             errorMessageLabel.setText(Main.resourceBundle.getString("IncorrectUsernameOrPassword"));
                 logInBtn.setText(Main.resourceBundle.getString("Retry"));

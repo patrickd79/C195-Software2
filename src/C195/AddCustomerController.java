@@ -9,9 +9,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class AddCustomerController {
@@ -55,7 +61,6 @@ public class AddCustomerController {
         }
     }
 
-    //CHANGE TO DYNAMIC DATA RETRIEVE WHEN POSSIBLE!!!
     public void populateComboBoxCountry(){
         countryNames = FXCollections.observableArrayList();
         for(Country c : countries){
@@ -76,6 +81,14 @@ public class AddCustomerController {
             addCustErrorField.setTextFill(Color.RED);
             addCustErrorField.setText("Please choose a Country First");
         }
+    }
+
+    public void goToMainMenuWindow(ActionEvent event) throws IOException {
+        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
+        Scene mainMenuScene = new Scene(mainMenu);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(mainMenuScene);
+        window.show();
     }
 
     public void initialize() {
