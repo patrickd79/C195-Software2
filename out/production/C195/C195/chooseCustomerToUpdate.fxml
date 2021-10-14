@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.ChooseCustomerToUpdateController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.ChooseCustomerToUpdateController">
    <children>
       <Label layoutX="209.0" layoutY="36.0" text="Choose a Customer To Update" />
       <Label layoutX="70.0" layoutY="87.0" text="Enter a Customer ID" />

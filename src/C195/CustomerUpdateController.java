@@ -20,17 +20,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class CustomerUpdateController {
     @FXML
     public Label updateCustIDLabel;
     @FXML
-    public ComboBox updateCustomerComboDivId;
+    public ComboBox<String> updateCustomerComboDivId;
     @FXML
-    public ComboBox updateCustomerComboCountry;
+    public ComboBox<String> updateCustomerComboCountry;
     @FXML
     public TextField updateCustNameField;
     @FXML
@@ -58,6 +58,17 @@ public class CustomerUpdateController {
     private HashMap<String, Integer> countryIdAndName = new HashMap<>();
     private String customerID;
 
+    public void updateCustomer(ActionEvent event) throws SQLException {
+        String name = updateCustNameField.getText();
+        String address = updateCustAddressField.getText();
+        String postalCode = updateCustPostalCodeField.getText();
+        String phone = updateCustPhoneField.getText();
+        String updatedBy = currentPersonCustomerUpdatedByField.getText();
+        String divID = DBFirstLevDiv.getDivID(updateCustomerComboDivId.getValue());
+        //call DBCustomer update method
+        DBCustomer.updateCustomer(customerID,name,address,postalCode,phone,updatedBy,divID);
+    }
+
     public void populateCustomerData(String customerID){
         int cid = Integer.parseInt(customerID);
         Customer customer = DBCustomer.getACustomer(cid);
@@ -68,13 +79,9 @@ public class CustomerUpdateController {
         updateCustPhoneField.setText(customer.getPhone());
         updateCustCreatedBy.setText(customer.getCreatedBy());
         updateCustCreatedOn.setText(customer.getCreatedDate());
-        if(customer.getLastUpdatedBy() != null){
-            updateCustLastUpdatedBy.setText(customer.getLastUpdatedBy());
-            updateCustLastUpdateDate.setText(customer.getLastUpdate());
-        }else{
-            updateCustLastUpdatedBy.setText("N/A");
-            updateCustLastUpdateDate.setText("N/A");
-        }
+        updateCustLastUpdatedBy.setText(customer.getLastUpdatedBy());
+        updateCustLastUpdateDate.setText(customer.getLastUpdate());
+
     }
 
     public void populateComboBoxCountry(){

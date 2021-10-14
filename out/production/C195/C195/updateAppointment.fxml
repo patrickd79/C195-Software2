@@ -10,5 +10,5 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="C195.UpdateAppointmentController"
             prefHeight="400.0" prefWidth="600.0">
-
+    <Button layoutX="229.0" layoutY="330.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
 </AnchorPane>
