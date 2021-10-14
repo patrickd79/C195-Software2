@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.CustomerUpdateController">
+<AnchorPane prefHeight="546.0" prefWidth="978.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.CustomerUpdateController">
     <children>
         <Label layoutX="237.0" layoutY="22.0" text="Update Customer" />
         <ComboBox fx:id="updateCustomerComboDivId" layoutX="379.0" layoutY="200.0" prefWidth="150.0" promptText="First Level Div" />
@@ -16,10 +16,10 @@
         <TextField fx:id="updateCustPostalCodeField" layoutX="12.0" layoutY="223.0" promptText="Postal Code" />
         <TextField fx:id="updateCustPhoneField" layoutX="13.0" layoutY="294.0" promptText="Phone  Number" />
         <TextField fx:id="currentPersonCustomerUpdatedByField" layoutX="20.0" layoutY="347.0" prefHeight="26.0" prefWidth="159.0" promptText="Person Updating Record" />
-        <Button fx:id="updateCustomerBtn" layoutX="379.0" layoutY="330.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer" />
-        <Label fx:id="updateCustErrorField" layoutX="302.0" layoutY="11.0" prefHeight="39.0" prefWidth="275.0" textFill="#d80c0c" />
+        <Button fx:id="updateCustomerBtn" layoutX="642.0" layoutY="480.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update Customer" />
+        <Label fx:id="updateCustErrorField" layoutX="564.0" layoutY="21.0" prefHeight="39.0" prefWidth="275.0" textFill="#d80c0c" />
       <Label fx:id="updateCustIDLabel" layoutX="14.0" layoutY="35.0" prefHeight="30.0" prefWidth="150.0" text="Customer ID" />
-        <Button layoutX="229.0" layoutY="330.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
+        <Button layoutX="810.0" layoutY="480.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
       <Label fx:id="updateCustCreatedBy" layoutX="205.0" layoutY="122.0" prefHeight="18.0" prefWidth="150.0" text="Created By" />
       <Label fx:id="updateCustCreatedOn" layoutX="205.0" layoutY="169.0" text="Created Date" />
       <Label fx:id="updateCustLastUpdatedBy" layoutX="205.0" layoutY="218.0" text="Last Updated By" />

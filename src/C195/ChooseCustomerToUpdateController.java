@@ -10,17 +10,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ChooseCustomerToUpdateController {
-    @FXML
-    public TextField customerIDField;
     @FXML
     public TableView<Customer> tableView;
     @FXML
@@ -44,9 +42,17 @@ public class ChooseCustomerToUpdateController {
     @FXML
     public TableColumn<Customer, Integer> divIDCol;
     public static String customerID;
+    public String name;
+    @FXML
+    public Label deleteCustomerMessage;
 
     public void initialize() {
         JDBC.openConnection();
+        setTableView();
+
+    }
+
+    public void setTableView(){
         tableView.setItems(DBCustomer.getAllCustomers());
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customer_ID"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("customer_Name"));
@@ -61,17 +67,29 @@ public class ChooseCustomerToUpdateController {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
-    public String CustomerToUpdate() {
+    public void customerToUpdate() {
         ObservableList<Customer> selectedCustomer;
         selectedCustomer = tableView.getSelectionModel().getSelectedItems();
         for(Customer customer: selectedCustomer){
             customerID = String.valueOf(customer.getCustomer_ID());
+            name = customer.getCustomer_Name();
         }
-        return customerID;
+    }
+    public void deleteCustomer(ActionEvent event) throws IOException {
+        customerToUpdate();
+        if(customerID != null && !name.equals(null)){
+            DBCustomer.deleteCustomer(customerID);
+            deleteCustomerMessage.setText("Customer "+name+" deleted.");
+            setTableView();
+        }else{
+            deleteCustomerMessage.setText("You must select a Customer to delete first.");
+        }
+
+
     }
 
     public void goToUpdateCustomerWindow(ActionEvent event) throws IOException {
-        CustomerToUpdate();
+        customerToUpdate();
         Parent updateCustomerWindow = FXMLLoader.load(getClass().getResource("customerUpdate.fxml"));
         Scene updateCustomerScene = new Scene(updateCustomerWindow);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

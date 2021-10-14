@@ -58,15 +58,28 @@ public class CustomerUpdateController {
     private HashMap<String, Integer> countryIdAndName = new HashMap<>();
     private String customerID;
 
-    public void updateCustomer(ActionEvent event) throws SQLException {
+    public void updateCustomer(ActionEvent event) throws Exception {
         String name = updateCustNameField.getText();
         String address = updateCustAddressField.getText();
         String postalCode = updateCustPostalCodeField.getText();
         String phone = updateCustPhoneField.getText();
         String updatedBy = currentPersonCustomerUpdatedByField.getText();
         String divID = DBFirstLevDiv.getDivID(updateCustomerComboDivId.getValue());
-        //call DBCustomer update method
-        DBCustomer.updateCustomer(customerID,name,address,postalCode,phone,updatedBy,divID);
+        if(!divID.equals("0") && !updatedBy.isEmpty() && !name.isEmpty() && !address.isEmpty() && !postalCode.isEmpty() && !phone.isEmpty() && !updatedBy.isEmpty()) {
+            try {
+                //call DBCustomer update method
+                DBCustomer.updateCustomer(customerID, name, address, postalCode, phone, updatedBy, divID);
+                updateCustErrorField.setTextFill(Color.BLACK);
+                updateCustErrorField.setText("Customer Record Created");
+            } catch (Exception exception) {
+                updateCustErrorField.setTextFill(Color.RED);
+                updateCustErrorField.setText("Please complete all fields");
+                exception.printStackTrace();
+            }
+        }else{
+            updateCustErrorField.setTextFill(Color.RED);
+            updateCustErrorField.setText("Please complete all fields");
+        }
     }
 
     public void populateCustomerData(String customerID){
