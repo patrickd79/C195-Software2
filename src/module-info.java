@@ -5,6 +5,7 @@ module C195 {
     requires java.sql;
     requires mysql.connector.java;
     exports C195;
+    exports C195.Entities;
 
 
 

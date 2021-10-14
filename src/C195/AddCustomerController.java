@@ -84,6 +84,7 @@ public class AddCustomerController {
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
+        JDBC.closeConnection();
         Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
         Scene mainMenuScene = new Scene(mainMenu);
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();

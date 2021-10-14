@@ -1,5 +1,6 @@
 package C195.Helper;
 
+import C195.Entities.Country;
 import C195.Entities.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,6 +91,35 @@ public class DBCustomer {
             throwable.printStackTrace();
         }
         return cust;
+    }
+
+    public static ObservableList<Customer> getAllCustomers(){
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+        Customer cust = null;
+        try{
+            String sqlStmt = "SELECT * FROM Customers;";
+            PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            ResultSet results = customerPS.executeQuery();
+
+            while(results.next()){
+                int customerID = results.getInt("Customer_ID");
+                String Customer_Name = results.getString("Customer_Name");
+                String address = results.getString("Address");
+                String postalCode = results.getString("Postal_Code");
+                String phone = results.getString("Phone");
+                String createDate = results.getString("Create_Date");
+                String createdBy = results.getString("Created_By");
+                String lastUpdate = results.getString("Last_Update");
+                String lastUpdatedBy = results.getString("Last_Updated_By");
+                int divID = results.getInt("Division_ID");
+                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDate,createdBy,lastUpdate,lastUpdatedBy,divID);
+                customerList.add(cust);
+            }
+        }
+        catch(SQLException throwable){
+            throwable.printStackTrace();
+        }
+        return customerList;
     }
 
 
