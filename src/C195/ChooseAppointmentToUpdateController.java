@@ -56,11 +56,11 @@ public class ChooseAppointmentToUpdateController {
     public Label deleteAppointmentMessage;
     public static String apptID;
     public static String title;
+    public static Appointment thisAppt;
 
     public void initialize() {
         JDBC.openConnection();
         setTableView();
-
     }
 
     public void setTableView(){
@@ -97,12 +97,27 @@ public class ChooseAppointmentToUpdateController {
             for(Appointment appt: selectedAppt){
                 apptID = String.valueOf(appt.getAppointmentID());
                 title = appt.getTitle();
+                thisAppt = appt;
             }
         }
 
-    public void goToMainMenuWindow(ActionEvent event) {
+    public void goToMainMenuWindow(ActionEvent event) throws IOException {
+        JDBC.closeConnection();
+        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
+        Scene mainMenuScene = new Scene(mainMenu);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(mainMenuScene);
+        window.show();
     }
 
     public void deleteAppointment(ActionEvent event) {
+        apptToUpdate();
+        if(!apptID.equals(null) && !title.equals(null)){
+            DBAppointment.deleteAppointment(apptID);
+            deleteAppointmentMessage.setText("Appointment Title: "+title+", ID: "+apptID+" deleted.");
+            setTableView();
+        }else{
+            deleteAppointmentMessage.setText("You must select an Appointment to delete first.");
+        }
     }
 }

@@ -1,6 +1,7 @@
 package C195;
 
 import C195.Entities.Customer;
+import C195.Helper.DBAppointment;
 import C195.Helper.DBCustomer;
 import C195.Helper.JDBC;
 import javafx.collections.ObservableList;
@@ -77,6 +78,7 @@ public class ChooseCustomerToUpdateController {
     }
     public void deleteCustomer(ActionEvent event) throws IOException {
         customerToUpdate();
+        DBAppointment.deleteAppointmentsForASingleCustomer(customerID);
         if(customerID != null && !name.equals(null)){
             DBCustomer.deleteCustomer(customerID);
             deleteCustomerMessage.setText("Customer "+name+" deleted.");

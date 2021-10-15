@@ -31,6 +31,25 @@ public class DBContacts {
         return contact;
     }
 
+    public static Contact getAContactByID(String id){
+        Contact contact = null;
+        try{
+            String sqlStmt = "SELECT Contact_ID, Contact_Name, Email FROM CONTACTS WHERE Contact_ID = '"+id+"';";
+            PreparedStatement contactPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            ResultSet results = contactPS.executeQuery();
+            while(results.next()){
+                int contact_id = results.getInt("Contact_ID");
+                String contact_name = results.getString("Contact_Name");
+                String email = results.getString("Email");
+                contact = new Contact(contact_id,contact_name,email);
+            }
+        }
+        catch(SQLException throwable){
+            throwable.printStackTrace();
+        }
+        return contact;
+    }
+
 
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
