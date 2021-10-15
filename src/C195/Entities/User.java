@@ -12,6 +12,16 @@ public class User {
     public User() {
     }
 
+    public User(int userID, String userName, String password, String createdDate, String createdBy, String lastUpdate, String lastUpdatedBy) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+        this.createdDate = createdDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
     public int getUserID() {
         return userID;
     }

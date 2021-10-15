@@ -52,7 +52,6 @@ public class AddCustomerController {
                     customerCreatedByField.getText().toString(), DBFirstLevDiv.getDivID(addCustomerComboDivId.getValue()));
             addCustErrorField.setTextFill(Color.BLACK);
             addCustErrorField.setText("Customer Record Created");
-
             JDBC.closeConnection();
         }catch(Exception exception){
             addCustErrorField.setTextFill(Color.RED);

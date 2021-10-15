@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="C195.ChooseAppointmentToUpdateController"
+            prefHeight="700.0" prefWidth="900.0">
+    <Button layoutX="713.0" layoutY="551.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
+
+    <Button layoutX="55.0" layoutY="551.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Customer" />
+    <TableView fx:id="tableView" layoutX="18.0" layoutY="86.0" prefHeight="253.0" prefWidth="831.0">
+        <columns>
+            <TableColumn fx:id="IDCol" prefWidth="55.0" text="ID" />
+            <TableColumn fx:id="titleCol" prefWidth="95.0" text="Title" />
+            <TableColumn fx:id="descriptionCol" prefWidth="131.0" text="Description" />
+            <TableColumn fx:id="locationCol" prefWidth="78.0" text="Location" />
+            <TableColumn fx:id="typeCol" prefWidth="77.0" text="Type" />
+            <TableColumn fx:id="startCol" prefWidth="77.0" text="Start" />
+            <TableColumn fx:id="endCol" prefWidth="77.0" text="End" />
+            <TableColumn fx:id="createDateCol" prefWidth="90.0" text="Created" />
+            <TableColumn fx:id="createdByCol" prefWidth="71.0" text="Created By" />
+            <TableColumn fx:id="lastUpdateDateCol" prefWidth="77.0" text="Last Update" />
+            <TableColumn fx:id="lastUpdatedByCol" prefWidth="90.0" text="Last Update By" />
+            <TableColumn fx:id="customerIDCol" prefWidth="66.0" text="Customer ID" />
+            <TableColumn fx:id="userIDCol" prefWidth="66.0" text="User ID" />
+            <TableColumn fx:id="contactIDCol" prefWidth="66.0" text="Contact ID" />
+        </columns>
+    </TableView>
+    <Button layoutX="299.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="30.0" prefWidth="170.0" text="Delete Customer" textFill="#e10808" />
+    <Label fx:id="deleteAppointmentMessage" layoutX="281.0" layoutY="457.0" prefHeight="30.0" prefWidth="290.0" textFill="#e40e0e" />
+
+
+</AnchorPane>

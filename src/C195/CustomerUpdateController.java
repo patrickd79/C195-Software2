@@ -84,7 +84,7 @@ public class CustomerUpdateController {
 
     public void populateCustomerData(String customerID){
         int cid = Integer.parseInt(customerID);
-        Customer customer = DBCustomer.getACustomer(cid);
+        Customer customer = DBCustomer.getACustomerByID(cid);
         updateCustIDLabel.setText(String.valueOf(customer.getCustomer_ID()));
         updateCustNameField.setText(customer.getCustomer_Name());
         updateCustAddressField.setText(customer.getAddress());

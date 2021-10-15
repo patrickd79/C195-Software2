@@ -1,5 +1,9 @@
 package C195.Helper;
 
+import C195.Entities.Appointment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -9,7 +13,7 @@ public class DBAppointment {
     public Connection connection;
 
 
-    public static void deleteAppointments(int id){
+    public static void deleteAppointmentsForASingleCustomer(int id){
         String sqlStmt = " DELETE FROM APPOINTMENTS WHERE Customer_ID="+id+";";
         try {
             //prepare the sql stmt
@@ -30,8 +34,8 @@ public class DBAppointment {
         String sqlStmt = "INSERT into APPOINTMENTS(Title, Description, Location, Type, Start, "+
                 "End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, "+
                 "User_ID, Contact_ID)Values('"+title+"', '"+description+"', '"+location+"', '"+type+"', '"+
-                start+"', "+end+"', "+create_date+"', '"+createdBy+"', '"+create_date+"', '"+createdBy+"', '"+customerId+
-                "'"+userId+"', "+contactId+"');";
+                start+"', '"+end+"', '"+create_date+"', '"+createdBy+"', '"+create_date+"', '"+createdBy+"', '"+customerId+
+                "', '"+userId+"', '"+contactId+"');";
         try {
             //prepare the sql stmt
             PreparedStatement appointPS = JDBC.getConnection().prepareStatement(sqlStmt);
@@ -40,6 +44,12 @@ public class DBAppointment {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
+    }
+
+    public static ObservableList<Appointment> getAllAppointments() {
+        ObservableList<Appointment> apptList = FXCollections.observableArrayList();
+
+        return apptList;
     }
 
 
