@@ -90,7 +90,7 @@ public class UpdateAppointmentController {
         String userID = String.valueOf(user.getUserID());
         String contactName = contactCombo.getValue();
         Contact contact = DBContacts.getAContactByName(contactName);
-        String contactID = String.valueOf(contact.getContactID())
+        String contactID = String.valueOf(contact.getContactID());
                 //START HERE NEED TO FIX COMBO BOXES AND THE IDS.!!!!!!!!!!!!!!!!!!!!!!!!!!!
         try {
             //call DBCustomer update method
@@ -215,6 +215,9 @@ public class UpdateAppointmentController {
         JDBC.openConnection();
         apptID = ChooseAppointmentToUpdateController.apptID;
         appt = DBAppointment.getAppointmentByID(apptID);
+        contacts = DBContacts.getAllContacts();
+        customers = DBCustomer.getAllCustomers();
+        users = DBUser.getAllUsers();
         populateAppointmentData();
 
     }

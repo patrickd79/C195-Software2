@@ -77,10 +77,10 @@ public class DBAppointment {
                 " End = '"+endDate+" "+endTime+"',"+
                 " Last_Update = '"+update_date+"'," +
                 " Last_Updated_By = '"+updatedBy+"'," +
-                " Customer_ID = '"+customerID+"'" +
-                " User_ID = '"+userID+"'" +
-                " Contact_ID = '"+contactID+"'" +
-                "WHERE Appointment_ID = "+id+";";
+                " Customer_ID = "+customerID+"," +
+                " User_ID = "+userID+"," +
+                " Contact_ID = "+contactID+"" +
+                " WHERE Appointment_ID = "+id+";";
 
         System.out.println(sqlStmt);
         try {
