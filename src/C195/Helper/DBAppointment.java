@@ -60,6 +60,40 @@ public class DBAppointment {
         }
     }
 
+    public static void updateAppointment(String id, String title, String description, String location,
+                                         String type, String startDate,String startTime, String endDate,String endTime,String updatedBy, String customerID,
+                                         String userID, String contactID){
+        Date date = new Date();
+        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        String update_date = sqlDate.toString();
+        System.out.println(update_date);
+        String sqlStmt = "UPDATE APPOINTMENTS " +
+                "SET" +
+                " Title = '"+title+"'," +
+                " Description = '"+description+"'," +
+                " Location = '"+location+"'," +
+                " Type = '"+type+"'," +
+                " Start = '"+startDate+" "+startTime+"',"+
+                " End = '"+endDate+" "+endTime+"',"+
+                " Last_Update = '"+update_date+"'," +
+                " Last_Updated_By = '"+updatedBy+"'," +
+                " Customer_ID = '"+customerID+"'" +
+                " User_ID = '"+userID+"'" +
+                " Contact_ID = '"+contactID+"'" +
+                "WHERE Appointment_ID = "+id+";";
+
+        System.out.println(sqlStmt);
+        try {
+            //prepare the sql stmt
+            PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            customerPS.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+
+    }
+
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> apptList = FXCollections.observableArrayList();
         Appointment appt = null;

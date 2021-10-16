@@ -1,5 +1,7 @@
 package C195.Entities;
 
+import java.time.LocalDateTime;
+
 public class Appointment {
     private int appointmentID;
     private String title;
@@ -81,6 +83,7 @@ public class Appointment {
     public String getStart() {
         return start;
     }
+
 
     public void setStart(String start) {
         this.start = start;
