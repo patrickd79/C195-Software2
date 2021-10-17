@@ -21,20 +21,8 @@ public class MainMenuController {
     public void initialize() {
     //System.out.println(Locale.getDefault().toString());
     //successfulLoginTextArea.setText(Locale.getDefault().toString());
-        //open a connection to the DB
-        //JDBC.openConnection();
-        //get the connection object to use in queries
-        //connection = JDBC.getConnection();
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-        //DBCountries.addCountry("Britain", sqlDate);
-        //printCountries();
-
-
-    //don't forget to close the connection!
-
-
-
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
     }
 
     public void goToAddCustomerWindow(ActionEvent event) throws IOException {
@@ -68,23 +56,4 @@ public class MainMenuController {
         window.setScene(updateAppointmentScene);
         window.show();
     }
-
-    //get all countries and print out
-    /*public void printCountries() {
-        ObservableList<Country> countries = DBCountries.getAllCountries();
-        for (Country country : countries) {
-            System.out.println(country.getCountryID() +" "+ country.getCountryName());
-        }
-    }*/
-
-
-
-
-
-    /*public static void printTime(ActionEvent e) throws IOException {
-        Locale locale = Locale.getDefault();
-        successfulLoginTextArea.setText(locale.toString());
-    }*/
-
-
 }

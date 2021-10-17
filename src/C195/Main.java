@@ -2,7 +2,9 @@
 
 package C195;
 
+import C195.Helper.JDBC;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -48,7 +50,7 @@ public class Main extends Application {
         //set the resource bundle to use for the current user's experience
         setResourceBundle(userLanguage);
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         System.out.println(sqlDate.toString());
         // Load the FXML file
         Parent parent = FXMLLoader.load(getClass().getResource("login.fxml"));
@@ -58,6 +60,7 @@ public class Main extends Application {
         stage.setTitle(resourceBundle.getString("SchedulingApplication"));
         stage.setScene(scene);
         stage.show();
+        stage.setOnCloseRequest(e -> exitApplication());
     }
 
     public static void main(String[] args) {
@@ -71,5 +74,14 @@ public class Main extends Application {
         Stage window = (Stage) ((Node)e.getSource()).getScene().getWindow();
         window.setScene(newScene);
         window.show();
+    }
+
+    /**
+     * closes the application on the click of the exit button
+     */
+    public void exitApplication(){
+        JDBC.closeConnection();
+        System.out.println("Closing");
+        System.exit(0);
     }
 }

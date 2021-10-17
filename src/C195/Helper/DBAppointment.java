@@ -43,7 +43,7 @@ public class DBAppointment {
                                       String start, String end, String createdBy, String customerId,
                                       String userId, String contactId){
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String create_date = sqlDate.toString();
         String sqlStmt = "INSERT into APPOINTMENTS(Title, Description, Location, Type, Start, "+
                 "End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, "+
@@ -64,7 +64,7 @@ public class DBAppointment {
                                          String type, String startDate,String startTime, String endDate,String endTime,String updatedBy, String customerID,
                                          String userID, String contactID){
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String update_date = sqlDate.toString();
         System.out.println(update_date);
         String sqlStmt = "UPDATE APPOINTMENTS " +

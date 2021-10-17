@@ -10,10 +10,9 @@ import java.util.Date;
 
 public class DBCustomer {
 
-
     public static void updateCustomer(String id, String name, String address, String postalCode, String phone, String updatedBy, String divID){
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String update_date = sqlDate.toString();
         System.out.println(update_date);
         String sqlStmt = "UPDATE Customers " +
@@ -54,7 +53,7 @@ public class DBCustomer {
 
     public static void addCustomer(String name, String address, String postalCode, String phone, String createdBy, String divID){
         Date date = new Date();
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String create_date = sqlDate.toString();
         //System.out.println(create_date);
         //System.out.println("name:"+name+" address:"+address+" postal:"+postalCode+" "+"phone:"+phone+" divID:"+divID+"");

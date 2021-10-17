@@ -1,7 +1,10 @@
 package C195.Helper;
 
+import javafx.scene.control.Alert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public abstract class JDBC {
     private static final String DBName = "client_schedule";
@@ -23,13 +26,18 @@ public abstract class JDBC {
         }
         catch(Exception e){
             System.out.println("Error: " + e.getMessage());
+            //sends an alert dialog to the user if unable to establish a connection to the DB
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Database Error");
+            alert.setContentText("Unable to Connect to the Database");
+            alert.showAndWait();
         }
     }
     public static Connection getConnection(){
         return connection;
     }
 
-    public static void closeConnection(){
+    public static void closeConnection() {
         try{
             connection.close();
             System.out.println("Connection closed");

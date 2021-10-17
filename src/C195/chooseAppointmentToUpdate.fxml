@@ -31,7 +31,7 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
     </TableView>
-    <Button layoutX="298.0" layoutY="718.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="30.0" prefWidth="170.0" text="Delete Customer" textFill="#e10808" />
+    <Button layoutX="298.0" layoutY="718.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="30.0" prefWidth="170.0" text="Delete Appointment" textFill="#e10808" />
     <Label fx:id="deleteAppointmentMessage" layoutX="281.0" layoutY="457.0" prefHeight="30.0" prefWidth="290.0" textFill="#e40e0e" />
 
 

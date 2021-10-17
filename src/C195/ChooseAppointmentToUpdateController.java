@@ -110,13 +110,13 @@ public class ChooseAppointmentToUpdateController {
         window.show();
     }
 
-    public void deleteAppointment(ActionEvent event) {
+    public void deleteAppointment(ActionEvent event) throws IOException {
         apptToUpdate();
-        if(!apptID.equals(null) && !title.equals(null)){
+        try{
             DBAppointment.deleteAppointment(apptID);
             deleteAppointmentMessage.setText("Appointment Title: "+title+", ID: "+apptID+" deleted.");
             setTableView();
-        }else{
+        }catch(Exception e){
             deleteAppointmentMessage.setText("You must select an Appointment to delete first.");
         }
     }
