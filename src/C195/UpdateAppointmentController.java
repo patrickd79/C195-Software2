@@ -82,12 +82,12 @@ public class UpdateAppointmentController {
         String endDate = String.valueOf(updateAppointmentEndDate.getValue());
         String endTime = endTimeField.getText();
         String updatedBy = updatingNowField.getText();
-        String customerName = customerCombo.getValue();
-        Customer customer = DBCustomer.getACustomerByName(customerName);
-        String customerID = String.valueOf(customer.getCustomer_ID());
-        String userName = userCombo.getValue();
-        User user = DBUser.getAUserByName(userName);
-        String userID = String.valueOf(user.getUserID());
+        String customerID = customerCombo.getValue();
+        //Customer customer = DBCustomer.getACustomerByID(customerID);
+        //String customerID = String.valueOf(customer.getCustomer_ID());
+        String userID = userCombo.getValue();
+        //User user = DBUser.getAUserByName(userName);
+        //String userID = String.valueOf(user.getUserID());
         String contactName = contactCombo.getValue();
         Contact contact = DBContacts.getAContactByName(contactName);
         String contactID = String.valueOf(contact.getContactID());
@@ -114,10 +114,10 @@ public class UpdateAppointmentController {
         window.setScene(mainMenuScene);
         window.show();
     }
-    public static LocalDate LOCAL_DATE (String dateString){
+    /*public static LocalDate LOCAL_DATE (String dateString){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDate.parse(dateString, formatter);
-    }
+    }*/
 
     public static String getDateAndTimeNoSeconds(String dateString){
         String date;
@@ -137,7 +137,7 @@ public class UpdateAppointmentController {
         return date;
     }
 
-    public static String getDate(String dateString){
+    public static String getDateNoTime(String dateString){
         char[] ca = dateString.toCharArray();
         StringBuilder sb = new StringBuilder();
         String date;
@@ -173,8 +173,8 @@ public class UpdateAppointmentController {
         descriptionField.setText(appt.getDescription());
         locationField.setText(appt.getLocation());
         typeField.setText(appt.getType());
-        updateAppointmentStartDate.setValue(LOCAL_DATE(appt.getStart()));
-        updateAppointmentEndDate.setValue(LOCAL_DATE(appt.getEnd()));
+        updateAppointmentStartDate.setValue(LocalDate.parse(getDateNoTime(appt.getStart())));
+        updateAppointmentEndDate.setValue(LocalDate.parse(getDateNoTime(appt.getEnd())));
         startTimeField.setText(getTime(appt.getStart()));
         endTimeField.setText(getTime(appt.getEnd()));
         createDateField.setText(getDateAndTimeNoSeconds(appt.getCreatedDate()));
@@ -185,8 +185,8 @@ public class UpdateAppointmentController {
         populateComboBoxCustomerNames();
         populateComboBoxUserNames();
         contactCombo.setValue(contact.getContactName());
-        customerCombo.setValue(customer.getCustomer_Name());
-        userCombo.setValue(user.getUserName());
+        customerCombo.setValue(String.valueOf(customer.getCustomer_ID()));
+        userCombo.setValue(String.valueOf(user.getUserID()));
 
     }
 
@@ -199,14 +199,14 @@ public class UpdateAppointmentController {
 
     public void populateComboBoxCustomerNames(){
         for(Customer c : customers){
-            customerNames.add(c.getCustomer_Name());
+            customerNames.add(String.valueOf(c.getCustomer_ID()));
         }
         customerCombo.setItems(customerNames);
     }
 
     public void populateComboBoxUserNames(){
         for(User u : users){
-            userNames.add(u.getUserName());
+            userNames.add(String.valueOf(u.getUserID()));
         }
         userCombo.setItems(userNames);
     }

@@ -1,5 +1,9 @@
 package C195.Entities;
 
+import C195.Helper.DBContacts;
+import C195.Helper.DBCustomer;
+import C195.Helper.DBUser;
+
 import java.time.LocalDateTime;
 
 public class Appointment {
@@ -15,8 +19,47 @@ public class Appointment {
     private String lastUpdate;
     private String lastUpdatedBy;
     private int customerID;//fk
+    private String customerName;
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerIDAndName() {
+        return customerIDAndName;
+    }
+
+    public void setCustomerIDAndName(String customerIDAndName) {
+        this.customerIDAndName = customerIDAndName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserIDAndName() {
+        return userIDAndName;
+    }
+
+    public void setUserIDAndName(String userIDAndName) {
+        this.userIDAndName = userIDAndName;
+    }
+
+    public String getContactIDAndName() {
+        return contactIDAndName;
+    }
+
+    public void setContactIDAndName(String contactIDAndName) {
+        this.contactIDAndName = contactIDAndName;
+    }
+
+    private String customerIDAndName = "ID:"+customerID+ ", Name:"+customerName+"";
     private int userID;//fk
+    private String userName;
+    private String userIDAndName = "ID:"+userID+ ", Name:"+userName+"";
     private int contactID;//fk
+    private String contactName;
+    private String contactIDAndName = "ID:"+contactID+ ", Name:"+contactName+"";
 
     public Appointment(){
 
@@ -38,6 +81,13 @@ public class Appointment {
         this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
+        Customer customer = DBCustomer.getACustomerByID(customerID);
+        this.customerName = customer.getCustomer_Name();
+        User user = DBUser.getAUserByID(userID);
+        this.userName = user.getUserName();
+        Contact contact = DBContacts.getAContactByID(String.valueOf(contactID));
+        this.contactName = contact.getContactName();
+
     }
 
     public int getAppointmentID() {
@@ -136,9 +186,23 @@ public class Appointment {
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
+    public void setCustomerName(int customerID){
+        Customer customer = DBCustomer.getACustomerByID(customerID);
+        this.customerName = customer.getCustomer_Name();
+    }
+    public String getCustomerName(){
+        return customerName;
+    }
 
     public int getUserID() {
         return userID;
+    }
+    public void setUserName(int userID){
+        User user = DBUser.getAUserByID(userID);
+        this.userName = user.getUserName();
+    }
+    public String getUserName(){
+       return userName;
     }
 
     public void setUserID(int userID) {
@@ -151,5 +215,12 @@ public class Appointment {
 
     public void setContactID(int contactID) {
         this.contactID = contactID;
+    }
+    public void setContactName(String contactID){
+        Contact contact = DBContacts.getAContactByID(contactID);
+        this.contactName = contact.getContactName();
+    }
+    public String getContactName(){
+        return contactName;
     }
 }

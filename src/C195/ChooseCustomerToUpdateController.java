@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -80,9 +77,16 @@ public class ChooseCustomerToUpdateController {
         customerToUpdate();
         DBAppointment.deleteAppointmentsForASingleCustomer(customerID);
         if(customerID != null && !name.equals(null)){
-            DBCustomer.deleteCustomer(customerID);
-            deleteCustomerMessage.setText("Customer "+name+" deleted.");
-            setTableView();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Confirm Customer Delete");
+            alert.setContentText("Are you sure you want to delete Customer: "+name+"?" );
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                DBCustomer.deleteCustomer(customerID);
+                deleteCustomerMessage.setText("Customer "+name+" deleted.");
+                setTableView();
+            }
+
         }else{
             deleteCustomerMessage.setText("You must select a Customer to delete first.");
         }

@@ -12,10 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -76,7 +73,7 @@ public class ChooseAppointmentToUpdateController {
         createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
         lastUpdateDateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
         lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
-        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
         contactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
@@ -112,12 +109,18 @@ public class ChooseAppointmentToUpdateController {
 
     public void deleteAppointment(ActionEvent event) throws IOException {
         apptToUpdate();
-        try{
-            DBAppointment.deleteAppointment(apptID);
-            deleteAppointmentMessage.setText("Appointment Title: "+title+", ID: "+apptID+" deleted.");
-            setTableView();
-        }catch(Exception e){
-            deleteAppointmentMessage.setText("You must select an Appointment to delete first.");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Confirm Appointment Delete");
+        alert.setContentText("Are you sure you want to delete Appointment: "+title+ ","+thisAppt.getDescription()+"?" );
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            try {
+                DBAppointment.deleteAppointment(apptID);
+                deleteAppointmentMessage.setText("Appointment Title: " + title + ", ID: " + apptID + " deleted.");
+                setTableView();
+            } catch (Exception e) {
+                deleteAppointmentMessage.setText("You must select an Appointment to delete first.");
+            }
         }
     }
 }

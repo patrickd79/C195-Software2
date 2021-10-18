@@ -39,6 +39,8 @@ public class AddCustomerController {
     public Button addCustomerBtn;
     @FXML
     public Label addCustErrorField;
+    @FXML
+    public TextField custCityField;
     private ObservableList<Country> countries = FXCollections.observableArrayList();
     private ObservableList<String> countryNames = FXCollections.observableArrayList();
     private ObservableList<String> divNames = FXCollections.observableArrayList();
@@ -47,9 +49,10 @@ public class AddCustomerController {
 
     public void addCustomer(ActionEvent event){
         try {
-            DBCustomer.addCustomer(custNameField.getText().toString(), custAddressField.getText().toString(),
-                    custPostalCodeField.getText().toString(), custPhoneField.getText().toString(),
-                    customerCreatedByField.getText().toString(), DBFirstLevDiv.getDivID(addCustomerComboDivId.getValue()));
+            DBCustomer.addCustomer(custNameField.getText(), custAddressField.getText()+", "+
+                    custCityField.getText(),
+                    custPostalCodeField.getText(), custPhoneField.getText(),
+                    customerCreatedByField.getText(), DBFirstLevDiv.getDivID(addCustomerComboDivId.getValue()));
             addCustErrorField.setTextFill(Color.BLACK);
             addCustErrorField.setText("Customer Record Created");
             JDBC.closeConnection();

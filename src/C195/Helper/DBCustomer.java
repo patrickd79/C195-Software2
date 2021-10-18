@@ -6,22 +6,36 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DBCustomer {
 
+
+
     public static void updateCustomer(String id, String name, String address, String postalCode, String phone, String updatedBy, String divID){
+
+        //this creates a local timestamp
         Date date = new Date();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String update_date = sqlDate.toString();
         System.out.println(update_date);
+
         String sqlStmt = "UPDATE Customers " +
                 "SET" +
                 " Customer_Name = '"+name+"'," +
                 " Address = '"+address+"'," +
                 " Postal_Code = '"+postalCode+"'," +
                 " Phone = '"+phone+"'," +
-                " Last_Update = '"+update_date+"'," +
+                " Last_Update = '"+TimeZones.getUTCTime()+"'," +
                 " Last_Updated_By = '"+updatedBy+"'," +
                 " Division_ID = '"+divID+"'" +
                 "WHERE Customer_ID = "+id+";";
@@ -52,15 +66,16 @@ public class DBCustomer {
     }
 
     public static void addCustomer(String name, String address, String postalCode, String phone, String createdBy, String divID){
+
+        //this creates a local timestamp
         Date date = new Date();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String create_date = sqlDate.toString();
-        //System.out.println(create_date);
-        //System.out.println("name:"+name+" address:"+address+" postal:"+postalCode+" "+"phone:"+phone+" divID:"+divID+"");
+
         String sqlStmt = "Insert into Customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, " +
                 "Created_By, Last_Update, Last_Updated_By, Division_ID)" +
-                "Values('"+name+"', '"+address+"', '"+postalCode+"', '"+phone+"', '"+create_date+
-                "', '"+createdBy+"', '"+create_date+"', '"+createdBy+"', '"+divID+"');";
+                "Values('"+name+"', '"+address+"', '"+postalCode+"', '"+phone+"', '"+TimeZones.getUTCTime()+
+                "', '"+createdBy+"', '"+TimeZones.getUTCTime()+"', '"+createdBy+"', '"+divID+"');";
         try {
             //prepare the sql stmt
             PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
@@ -74,6 +89,7 @@ public class DBCustomer {
     public static Customer getACustomerByName(String name){
         ObservableList<Customer> customer = FXCollections.observableArrayList();
         Customer cust = null;
+
         try{
             String sqlStmt = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID " +
                     "FROM Customers WHERE Customer_Name = '"+name+"';";
@@ -90,7 +106,10 @@ public class DBCustomer {
                 String lastUpdate = results.getString("Last_Update");
                 String lastUpdatedBy = results.getString("Last_Updated_By");
                 int divID = results.getInt("Division_ID");
-                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDate,createdBy,lastUpdate,lastUpdatedBy,divID);
+                String createDateLocal = TimeZones.convertToCurrentTimeZone(createDate);
+                String updateDateLocal = TimeZones.convertToCurrentTimeZone(lastUpdate);
+
+                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDateLocal,createdBy,updateDateLocal,lastUpdatedBy,divID);
                 customer.add(cust);
             }
         }
@@ -119,7 +138,10 @@ public class DBCustomer {
                 String lastUpdate = results.getString("Last_Update");
                 String lastUpdatedBy = results.getString("Last_Updated_By");
                 int divID = results.getInt("Division_ID");
-                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDate,createdBy,lastUpdate,lastUpdatedBy,divID);
+                String createDateLocal = TimeZones.convertToCurrentTimeZone(createDate);
+                String updateDateLocal = TimeZones.convertToCurrentTimeZone(lastUpdate);
+
+                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDateLocal,createdBy,updateDateLocal,lastUpdatedBy,divID);
                 customer.add(cust);
             }
         }
@@ -148,7 +170,10 @@ public class DBCustomer {
                 String lastUpdate = results.getString("Last_Update");
                 String lastUpdatedBy = results.getString("Last_Updated_By");
                 int divID = results.getInt("Division_ID");
-                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDate,createdBy,lastUpdate,lastUpdatedBy,divID);
+                String createDateLocal = TimeZones.convertToCurrentTimeZone(createDate);
+                String updateDateLocal = TimeZones.convertToCurrentTimeZone(lastUpdate);
+
+                cust = new Customer(customerID,Customer_Name,address,postalCode,phone,createDateLocal,createdBy,updateDateLocal,lastUpdatedBy,divID);
                 customerList.add(cust);
             }
         }
