@@ -37,4 +37,5 @@
       </toggleGroup></RadioButton>
    <RadioButton layoutX="91.0" layoutY="669.0" mnemonicParsing="false" onAction="#setCurrentWeekTableView" text="Appointments for Current Week" toggleGroup="$apptFilter" />
    <Label fx:id="viewApptErrorField" layoutX="539.0" layoutY="600.0" prefHeight="94.0" prefWidth="309.0" />
+   <Button layoutX="737.0" layoutY="699.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Appointment information" />
 </AnchorPane>

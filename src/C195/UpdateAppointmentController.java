@@ -93,11 +93,16 @@ public class UpdateAppointmentController {
         String contactID = String.valueOf(contact.getContactID());
                 //START HERE NEED TO FIX COMBO BOXES AND THE IDS.!!!!!!!!!!!!!!!!!!!!!!!!!!!
         try {
-            //call DBCustomer update method
-            DBAppointment.updateAppointment(id, title, description, location, type, startDate,
-                    startTime,endDate, endTime,updatedBy,customerID,userID,contactID);
-            updateApptErrorField.setTextFill(Color.BLACK);
-            updateApptErrorField.setText("Appointment Record Updated");
+            if(!updatingNowField.getText().equals("")) {
+                //call DBCustomer update method
+                DBAppointment.updateAppointment(id, title, description, location, type, startDate,
+                        startTime, endDate, endTime, updatedBy, customerID, userID, contactID);
+                updateApptErrorField.setTextFill(Color.BLACK);
+                updateApptErrorField.setText("Appointment Record Updated");
+            }else{
+                updateApptErrorField.setTextFill(Color.RED);
+                updateApptErrorField.setText("Please complete all fields");
+            }
         } catch (Exception exception) {
             updateApptErrorField.setTextFill(Color.RED);
             updateApptErrorField.setText("Please complete all fields");

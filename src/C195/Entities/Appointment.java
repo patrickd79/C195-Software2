@@ -20,6 +20,13 @@ public class Appointment {
     private String lastUpdatedBy;
     private int customerID;//fk
     private String customerName;
+    private String customerIDAndName = "ID:"+customerID+ ", Name:"+customerName+"";
+    private int userID;//fk
+    private String userName;
+    private String userIDAndName = "ID:"+userID+ ", Name:"+userName+"";
+    private int contactID;//fk
+    private String contactName;
+    private String contactIDAndName = "ID:"+contactID+ ", Name:"+contactName+"";
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -53,13 +60,7 @@ public class Appointment {
         this.contactIDAndName = contactIDAndName;
     }
 
-    private String customerIDAndName = "ID:"+customerID+ ", Name:"+customerName+"";
-    private int userID;//fk
-    private String userName;
-    private String userIDAndName = "ID:"+userID+ ", Name:"+userName+"";
-    private int contactID;//fk
-    private String contactName;
-    private String contactIDAndName = "ID:"+contactID+ ", Name:"+contactName+"";
+
 
     public Appointment(){
 

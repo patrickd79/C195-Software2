@@ -139,10 +139,19 @@ public class ViewAppointmentsController {
         ObservableList<Appointment> selectedAppt;
         selectedAppt = tableView.getSelectionModel().getSelectedItems();
         for(Appointment appt: selectedAppt){
-            apptID = String.valueOf(appt.getAppointmentID());
-            title = appt.getTitle();
-            thisAppt = appt;
+            ChooseAppointmentToUpdateController.apptID = String.valueOf(appt.getAppointmentID());
+            ChooseAppointmentToUpdateController.title = appt.getTitle();
+            ChooseAppointmentToUpdateController.thisAppt = appt;
         }
+    }
+
+    public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
+        apptToUpdate();
+        Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("updateAppointment.fxml"));
+        Scene updateAppointmentScene = new Scene(updateAppointmentWindow);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(updateAppointmentScene);
+        window.show();
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {

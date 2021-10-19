@@ -57,6 +57,7 @@ public class Main extends Application {
         // Build the scene graph
         Scene scene = new Scene(parent);
         // Display window using the scene graph
+        scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
         stage.setTitle(resourceBundle.getString("SchedulingApplication"));
         stage.setScene(scene);
         stage.show();

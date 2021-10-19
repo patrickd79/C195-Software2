@@ -12,14 +12,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Time;
 
 public class AddAppointmentController {
     @FXML
@@ -33,8 +32,6 @@ public class AddAppointmentController {
     @FXML
     public DatePicker addAppointmentStartDate;
     @FXML
-    public DatePicker addAppointmentEndDate;
-    @FXML
     public ComboBox<String> addAppointmentCustIDField;
     @FXML
     public ComboBox<String> addAppointmentUserIDField;
@@ -46,6 +43,18 @@ public class AddAppointmentController {
     public TextField addApptStartTimeField;
     @FXML
     public TextField addApptEndTimeField;
+    @FXML
+    public RadioButton startTimeAMToggle;
+    @FXML
+    public ToggleGroup startTime;
+    @FXML
+    public RadioButton startTimePMToggle;
+    @FXML
+    public RadioButton endTimeAMToggle;
+    @FXML
+    public ToggleGroup endTime;
+    @FXML
+    public RadioButton endTimePMToggle;
     ObservableList<Contact> contacts = FXCollections.observableArrayList();
     ObservableList<String> contactNames = FXCollections.observableArrayList();
     ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -54,26 +63,77 @@ public class AddAppointmentController {
     ObservableList<String> userNames = FXCollections.observableArrayList();
 
     public void addAppointment(ActionEvent event){
-        User user = DBUser.getAUserByName(addAppointmentUserIDField.getValue());
-        Contact contact = DBContacts.getAContactByName(addAppointmentContactNameField.getValue());
-        Customer customer = DBCustomer.getACustomerByName(addAppointmentCustIDField.getValue());
-        String startTime = addAppointmentStartDate.getValue().toString() + " " + addApptStartTimeField.getText();
-        String endTime = addAppointmentEndDate.getValue().toString() + " " + addApptEndTimeField.getText();
-        try{
-            DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
-                    addAppointmentTypeField.getText(), startTime,  endTime,
-                    user.getUserName(),
-                    String.valueOf(customer.getCustomer_ID()), String.valueOf(user.getUserID()),
-                     String.valueOf(contact.getContactID()));
-            addApptErrorField.setTextFill(Color.BLACK);
-            addApptErrorField.setText("Appointment Created");
-            JDBC.closeConnection();
-        }
-        catch(Exception e){
+
+
+
+            try {
+                User user = DBUser.getAUserByName(addAppointmentUserIDField.getValue());
+                Contact contact = DBContacts.getAContactByName(addAppointmentContactNameField.getValue());
+                Customer customer = DBCustomer.getACustomerByName(addAppointmentCustIDField.getValue());
+                String start = addApptStartTimeField.getText();
+                String end = addApptEndTimeField.getText();
+                String adjustedStartTime;
+                String adjustedEndTime;
+
+                if(startTimePMToggle.isSelected() && getHour(start) < 12){
+                    adjustedStartTime = (getHour(start) + 12) +":"+ getMinutes(start);
+                }else{
+                    adjustedStartTime = start;
+                }
+                if(endTimePMToggle.isSelected() && getHour(end) < 12){
+                    adjustedEndTime = (getHour(end) + 12) +":"+ getMinutes(end);
+                }else{
+                    adjustedEndTime = end;
+                }
+                System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
+                String startTime = addAppointmentStartDate.getValue().toString() + " "+ adjustedStartTime;
+                String endTime = addAppointmentStartDate.getValue().toString() + " " +adjustedEndTime;
+                DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
+                        addAppointmentTypeField.getText(), startTime, endTime,
+                        user.getUserName(),
+                        String.valueOf(customer.getCustomer_ID()), String.valueOf(user.getUserID()),
+                        String.valueOf(contact.getContactID()));
+                addApptErrorField.setTextFill(Color.BLACK);
+                addApptErrorField.setText("Appointment Created");
+                JDBC.closeConnection();
+            } catch (Exception e) {
+                addApptErrorField.setTextFill(Color.RED);
+                addApptErrorField.setText("Please complete all fields");
+                e.printStackTrace();
+            }
+
+
+    }
+
+    public String getMinutes(String time){
+        String[] strings = time.split(":",2);
+         return strings[1];
+
+    }
+
+    public int getHour(String time){
+        String[] strings = time.split(":",2);
+        int result = Integer.parseInt(strings[0]);
+        System.out.println(result);
+        return result;
+    }
+
+        public boolean togglesEmpty(){
+        boolean empty = false;
+        if(startTime.getToggles().isEmpty()){
+            startTimeAMToggle.setTextFill(Color.RED);
+            startTimePMToggle.setTextFill(Color.RED);
             addApptErrorField.setTextFill(Color.RED);
-            addApptErrorField.setText("Please complete all fields");
-            e.printStackTrace();
+            addApptErrorField.setText("Please choose /'AM/' or /'PM/'");
+            empty = true;
+        }else if(endTime.getToggles().isEmpty()){
+            endTimeAMToggle.setTextFill(Color.RED);
+            endTimePMToggle.setTextFill(Color.RED);
+            addApptErrorField.setTextFill(Color.RED);
+            addApptErrorField.setText("Please choose /'AM/' or /'PM/'");
+            empty = true;
         }
+        return empty;
     }
 
 
