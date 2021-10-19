@@ -40,7 +40,7 @@ public class LoginController implements Initializable {
     }
 
     public void setLanguageDisplayLabel(){
-        languageDisplayLabel.setText(Main.zone + " : " + Main.userLanguage + " : " + Main.userCountry);
+        languageDisplayLabel.setText(Main.zoneID + "   " +Main.zone + " : " + Main.userLanguage + " : " + Main.userCountry);
     }
 
     public void setLabels(){

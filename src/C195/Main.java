@@ -29,6 +29,7 @@ public class Main extends Application {
     //sets the zone string based on user's local system settings
     public static String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
             Locale.getDefault());
+    public static String zoneID = ZoneId.systemDefault().getId();
     //public static Locale locale = new Locale(userLanguage, userCountry);
 
     public static ResourceBundle resourceBundle;

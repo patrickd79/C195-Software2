@@ -58,4 +58,19 @@ public class TimeZones {
         return converted_date;
     }
 
+    public static String convertToESTTimeZone(String Date) {
+        String converted_date = "";
+        try {
+            DateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            localFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault().getId()));
+            java.util.Date date = localFormat.parse(Date);
+            DateFormat currentTFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            currentTFormat.setTimeZone(TimeZone.getTimeZone("EST"));
+            converted_date =  currentTFormat.format(date);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return converted_date;
+    }
+
 }

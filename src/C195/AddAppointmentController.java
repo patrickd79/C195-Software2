@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import C195.Helper.*;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -64,9 +65,7 @@ public class AddAppointmentController {
 
     public void addAppointment(ActionEvent event){
 
-
-
-            try {
+        try {
                 User user = DBUser.getAUserByName(addAppointmentUserIDField.getValue());
                 Contact contact = DBContacts.getAContactByName(addAppointmentContactNameField.getValue());
                 Customer customer = DBCustomer.getACustomerByName(addAppointmentCustIDField.getValue());
@@ -75,40 +74,97 @@ public class AddAppointmentController {
                 String adjustedStartTime;
                 String adjustedEndTime;
 
+                //adjust time to a 24 hour clock for the start time
                 if(startTimePMToggle.isSelected() && getHour(start) < 12){
                     adjustedStartTime = (getHour(start) + 12) +":"+ getMinutes(start);
                 }else{
                     adjustedStartTime = start;
                 }
+                //adjust time to a 24 hour clock for the end time
                 if(endTimePMToggle.isSelected() && getHour(end) < 12){
                     adjustedEndTime = (getHour(end) + 12) +":"+ getMinutes(end);
                 }else{
                     adjustedEndTime = end;
                 }
+
                 System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
                 String startTime = addAppointmentStartDate.getValue().toString() + " "+ adjustedStartTime;
                 String endTime = addAppointmentStartDate.getValue().toString() + " " +adjustedEndTime;
-                DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
-                        addAppointmentTypeField.getText(), startTime, endTime,
-                        user.getUserName(),
-                        String.valueOf(customer.getCustomer_ID()), String.valueOf(user.getUserID()),
-                        String.valueOf(contact.getContactID()));
-                addApptErrorField.setTextFill(Color.BLACK);
-                addApptErrorField.setText("Appointment Created");
-                JDBC.closeConnection();
-            } catch (Exception e) {
+                if(isDuringOfficeHours(startTime, endTime)){
+                    DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
+                            addAppointmentTypeField.getText(), startTime, endTime,
+                            user.getUserName(),
+                            String.valueOf(customer.getCustomer_ID()), String.valueOf(user.getUserID()),
+                            String.valueOf(contact.getContactID()));
+                    addApptErrorField.setTextFill(Color.BLACK);
+                    addApptErrorField.setText("Appointment Created");
+                    JDBC.closeConnection();
+                }else{
+                    addApptErrorField.setTextFill(Color.RED);
+                    addApptErrorField.setText("Please enter a start time after 0800 EST and an end time before 2200 EST.");
+                }
+
+
+        } catch (Exception e) {
                 addApptErrorField.setTextFill(Color.RED);
                 addApptErrorField.setText("Please complete all fields");
                 e.printStackTrace();
             }
+    }
 
+    public boolean isDuringOfficeHours(String start, String end){
+        //convert the passed date and times to EST
+        String startEST = TimeZones.convertToESTTimeZone(start);
+        String endEST = TimeZones.convertToESTTimeZone(end);
+        System.out.println("Start EST Converted: "+startEST+"    End EST Converted: "+endEST);
+        // extract the time portion of the string from the dates
+        String startTimeEST = UpdateAppointmentController.getTime(startEST);
+        String endTimeEST = UpdateAppointmentController.getTime(endEST);
+        //remove the : from the time and convert to an int
+        int startTimeInt = removeColonFromTime(startTimeEST);
+        int endTimeInt = removeColonFromTime(endTimeEST);
+        System.out.println("Start Int: "+startTimeInt+ "    End Time Int:"+endTimeInt);
 
+        return startTimeInt > 759 && startTimeInt < endTimeInt && endTimeInt < 2201;
+    }
+
+    public String adjustStartTimeTo24H(String time){
+        String adjustedTime;
+        //adjust time to a 24 hour clock for the start time
+        if(startTimePMToggle.isSelected() && getHour(time) < 12){
+            return adjustedTime = (getHour(time) + 12) +":"+ getMinutes(time);
+        }else{
+            return adjustedTime = time;
+        }
+    }
+
+    public String adjustEndTimeTo24H(String time){
+        String adjustedTime;
+        //adjust time to a 24 hour clock for the start time
+        if(endTimePMToggle.isSelected() && getHour(time) < 12){
+            return adjustedTime = (getHour(time) + 12) +":"+ getMinutes(time);
+        }else{
+            return adjustedTime = time;
+        }
+    }
+    public int removeColonFromTime(String time){
+        char[] ca = time.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String number;
+        for(int i = 0; i < 2; i++){
+            sb.append(ca[i]);
+        }
+        for(int i = 3; i < 5; i++){
+            sb.append(ca[i]);
+        }
+        number = sb.toString();
+        //returns the time with the ':' removed
+        return Integer.parseInt(number);
     }
 
     public String getMinutes(String time){
         String[] strings = time.split(":",2);
          return strings[1];
-
     }
 
     public int getHour(String time){
@@ -118,7 +174,7 @@ public class AddAppointmentController {
         return result;
     }
 
-        public boolean togglesEmpty(){
+    public boolean togglesEmpty(){
         boolean empty = false;
         if(startTime.getToggles().isEmpty()){
             startTimeAMToggle.setTextFill(Color.RED);
@@ -135,7 +191,6 @@ public class AddAppointmentController {
         }
         return empty;
     }
-
 
     public void populateComboBoxContactName(){
         for(Contact c : contacts){
