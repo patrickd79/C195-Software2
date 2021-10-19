@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DBAppointment {
@@ -64,10 +66,7 @@ public class DBAppointment {
                                          String type, String startDate,String startTime, String endDate,String endTime,String updatedBy, String customerID,
                                          String userID, String contactID){
 
-        Date date = new Date();
-        java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
-        String update_date = sqlDate.toString();
-        System.out.println(update_date);
+
         String start = startDate+" "+startTime;
         String end = endDate+" "+endTime;
 
@@ -172,6 +171,100 @@ public class DBAppointment {
             throwable.printStackTrace();
         }
         return appt;
+    }
+
+    public static String extractMonth(String date){
+        char[] ca = date.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String month;
+        for(int i = 5; i < 7; i++){
+            sb.append(ca[i]);
+        }
+        month = sb.toString();
+        //System.out.println("Month ="+month+" : date = "+date);
+        return month;
+    }
+
+    public static String extractYear(String date){
+        char[] ca = date.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String year;
+        for(int i = 0; i < 4; i++){
+            sb.append(ca[i]);
+        }
+        year = sb.toString();
+        //System.out.println("Year ="+year+" : date = "+date);
+        return year;
+    }
+
+    public static String extractDay(String date){
+        char[] ca = date.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        String day;
+        for(int i = 8; i < 10; i++){
+            sb.append(ca[i]);
+        }
+        day = sb.toString();
+        System.out.println("Day ="+day+" : date = "+date);
+        return day;
+    }
+
+    public static String extractWeek(String Date)  {
+        Calendar calendar = Calendar.getInstance();
+        int year = Integer.parseInt(extractYear(Date));
+        //have to subtract 1 from the month to account for the fact that calendar months are zero indexed
+        int month = Integer.parseInt(extractMonth(Date))-1;
+        int day = Integer.parseInt(extractDay(Date));
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        System.out.println("Date calendar set to:  "+calendar.getTime());
+        return String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR));
+    }
+
+    public static ObservableList<Appointment> getAppointmentsByMonth() {
+        ObservableList<Appointment> appts = getAllAppointments();
+        ObservableList<Appointment> apptsThatMatch = FXCollections.observableArrayList();
+        LocalDate date = LocalDate.now();
+        int monthNumber = date.getMonthValue();
+        int yearNumber = date.getYear();
+        String currentMonth = String.valueOf(monthNumber);
+        String currentYear = String.valueOf(yearNumber);
+
+
+        for(Appointment a: appts){
+            String apptMonth = extractMonth(a.getStart());
+            String apptYear = extractYear(a.getStart());
+            if(apptMonth.equals(currentMonth) && apptYear.equals(currentYear)){
+                apptsThatMatch.add(a);
+            }
+            //System.out.println(currentMonth +": "+ extractMonth(a.getStart()));
+        }
+        return apptsThatMatch;
+    }
+
+    public static ObservableList<Appointment> getAppointmentsByWeek() {
+        ObservableList<Appointment> appts = getAllAppointments();
+        ObservableList<Appointment> apptsThatMatch = FXCollections.observableArrayList();
+        //get current week number
+        Calendar now = Calendar.getInstance();
+        String currentWeek = String.valueOf(now.get(Calendar.WEEK_OF_YEAR));
+        LocalDate date = LocalDate.now();
+        int yearNumber = date.getYear();
+        String currentYear = String.valueOf(yearNumber);
+
+        for(Appointment a: appts){
+            String apptWeek = extractWeek(a.getStart());
+            String apptYear = extractYear(a.getStart());
+
+            if(apptWeek.equals(currentWeek) && apptYear.equals(currentYear)){
+                apptsThatMatch.add(a);
+            }
+            //System.out.println(currentWeek +": "+ extractWeek(a.getStart()));
+
+        }
+
+        return apptsThatMatch;
     }
 
 }

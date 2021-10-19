@@ -49,6 +49,14 @@ public class MainMenuController {
         window.show();
     }
 
+    public void goToViewAppointmentWindow(ActionEvent event) throws IOException {
+        Parent viewAppointmentWindow = FXMLLoader.load(getClass().getResource("viewAppointments.fxml"));
+        Scene viewAppointmentScene = new Scene(viewAppointmentWindow);
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        window.setScene(viewAppointmentScene);
+        window.show();
+    }
+
     public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
         Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("chooseAppointmentToUpdate.fxml"));
         Scene updateAppointmentScene = new Scene(updateAppointmentWindow);
