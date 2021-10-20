@@ -35,7 +35,7 @@ public class TimeZones {
     //get the current time zone
     public static String getCurrentTimeZone(){
         TimeZone tz = Calendar.getInstance().getTimeZone();
-        System.out.println(tz.getDisplayName());
+        //System.out.println(tz.getDisplayName());
         return tz.getID();
     }
 

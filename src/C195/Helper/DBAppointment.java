@@ -219,7 +219,7 @@ public class DBAppointment {
             sb.append(ca[i]);
         }
         day = sb.toString();
-        System.out.println("Day ="+day+" : date = "+date);
+        //System.out.println("Day ="+day+" : date = "+date);
         return day;
     }
 
@@ -232,7 +232,7 @@ public class DBAppointment {
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.DAY_OF_MONTH, day);
-        System.out.println("Date calendar set to:  "+calendar.getTime());
+        //System.out.println("Date calendar set to:  "+calendar.getTime());
         return String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR));
     }
 

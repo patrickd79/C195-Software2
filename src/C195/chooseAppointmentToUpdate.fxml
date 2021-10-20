@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="950.0" prefWidth="1351.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.ChooseAppointmentToUpdateController">
+<AnchorPane prefHeight="950.0" prefWidth="1351.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.ChooseAppointmentToUpdateController">
     <Button layoutX="688.0" layoutY="718.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
 
     <Button layoutX="49.0" layoutY="718.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Appointment" />

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="774.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.ViewAppointmentsController">
+<AnchorPane prefHeight="774.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.ViewAppointmentsController">
     <TableView fx:id="tableView" layoutX="9.0" layoutY="85.0" prefHeight="254.0" prefWidth="1246.0">
         <columns>
             <TableColumn fx:id="IDCol" prefWidth="31.0" text="ID" />

@@ -101,10 +101,12 @@ public class AddAppointmentController {
                     addApptErrorField.setTextFill(Color.BLACK);
                     addApptErrorField.setText("Appointment Created");
 
-                }else{
+                }else if(!isDuringOfficeHours(startTime, endTime)){
                     addApptErrorField.setTextFill(Color.RED);
-                    addApptErrorField.setText("Please enter an appointment date and time that has a start time after 0800 EST and an end time before 2200 EST," +
-                            "and does not overlap any other appointments for this customer.");
+                    addApptErrorField.setText("Please make sure that appointment time is between 0800 EST and 2200 EST.");
+                }else if(customerHasOverlappingAppointments(String.valueOf(customer.getCustomer_ID()),startTime, endTime)){
+                    addApptErrorField.setTextFill(Color.RED);
+                    addApptErrorField.setText("Please change the date or time of this appointment. This appointment overlaps another one of the customer's appointments.");
                 }
 
 
@@ -115,24 +117,25 @@ public class AddAppointmentController {
             }
     }
 
-    public boolean isDuringOfficeHours(String start, String end){
+    public static boolean isDuringOfficeHours(String start, String end){
+        System.out.println("Start: "+start+"   End: "+end);
         //convert the passed date and times to EST
         String startEST = TimeZones.convertToESTTimeZone(start);
         String endEST = TimeZones.convertToESTTimeZone(end);
         //String startDayOfWeek
-        System.out.println("Start EST Converted: "+startEST+"    End EST Converted: "+endEST);
+        //System.out.println("Start EST Converted: "+startEST+"    End EST Converted: "+endEST);
         // extract the time portion of the string from the dates
         String startTimeEST = UpdateAppointmentController.getTime(startEST);
         String endTimeEST = UpdateAppointmentController.getTime(endEST);
         //remove the : from the time and convert to an int
         int startTimeInt = removeColonFromTime(startTimeEST);
         int endTimeInt = removeColonFromTime(endTimeEST);
-        System.out.println("Start Int: "+startTimeInt+ "    End Time Int:"+endTimeInt);
+        //System.out.println("Start Int: "+startTimeInt+ "    End Time Int:"+endTimeInt);
 
         return startTimeInt > 759 && startTimeInt < endTimeInt && endTimeInt < 2201;
     }
 
-    public boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate){
+    public static boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate){
         ObservableList<Appointment> appts = DBAppointment.getAppointmentsForASingleCustomerByID(customerID);
         ObservableList<Date> dates = FXCollections.observableArrayList();
         Date start = TimeZones.convertStringToDate(startDate);
@@ -165,7 +168,7 @@ public class AddAppointmentController {
             return adjustedTime = time;
         }
     }
-    public int removeColonFromTime(String time){
+    public static int removeColonFromTime(String time){
         char[] ca = time.toCharArray();
         StringBuilder sb = new StringBuilder();
         String number;
@@ -180,15 +183,15 @@ public class AddAppointmentController {
         return Integer.parseInt(number);
     }
 
-    public String getMinutes(String time){
+    public static String getMinutes(String time){
         String[] strings = time.split(":",2);
          return strings[1];
     }
 
-    public int getHour(String time){
+    public static int getHour(String time){
         String[] strings = time.split(":",2);
         int result = Integer.parseInt(strings[0]);
-        System.out.println(result);
+        //System.out.println(result);
         return result;
     }
 

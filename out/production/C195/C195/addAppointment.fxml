@@ -9,7 +9,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="667.0" prefWidth="893.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.AddAppointmentController">
+<AnchorPane prefHeight="667.0" prefWidth="893.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.AddAppointmentController">
    <children>
       <Label layoutX="235.0" layoutY="28.0" text="Add Appointment" />
       <Button layoutX="632.0" layoutY="437.0" mnemonicParsing="false" onAction="#addAppointment" text="Add Appointment" />

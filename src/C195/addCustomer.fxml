@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="489.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.AddCustomerController">
+<AnchorPane prefHeight="489.0" prefWidth="633.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.AddCustomerController">
    <children>
       <Label layoutX="259.0" layoutY="22.0" text="Add Customer" />
       <ComboBox fx:id="addCustomerComboDivId" layoutX="379.0" layoutY="337.0" prefWidth="150.0" promptText="First Level Div" />
