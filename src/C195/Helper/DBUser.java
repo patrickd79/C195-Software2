@@ -19,16 +19,24 @@ public class DBUser {
             ResultSet results = userPS.executeQuery();
             while(results.next()){
                 int userID = results.getInt("User_ID");
+                System.out.println("User_ID"+userID);
                 String userName = results.getString("User_Name");
+                System.out.println("User_Name"+userName);
                 String password = results.getString("Password");
+                System.out.println("Password"+password);
                 String createDate = results.getString("Create_Date");
+                System.out.println("Create_Date"+createDate);
                 String createBy = results.getString("Created_By");
+                System.out.println("Created_By"+createBy);
                 String lastUpdate = results.getString("Last_Update");
+                System.out.println("Last_Update"+lastUpdate);
                 String lastUpdateBy = results.getString("Last_Updated_By");
+                System.out.println("Last_Updated_By"+lastUpdateBy);
                 user = new User(userID,userName,password,createDate,createBy,lastUpdate,lastUpdateBy);
             }
         }
         catch(SQLException throwable){
+            System.out.println("problem getting user");
             throwable.printStackTrace();
         }
         return user;

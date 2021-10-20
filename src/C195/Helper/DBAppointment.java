@@ -53,6 +53,45 @@ public class DBAppointment {
         return appts;
     }
 
+    public static ObservableList<Appointment> getAppointmentsForASingleUserByID(String id){
+        Appointment appt;
+        ObservableList<Appointment> appts = FXCollections.observableArrayList();
+        String sqlStmt = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID FROM APPOINTMENTS WHERE User_ID= '"+id+"';";
+        System.out.println("Get User SQL stmt: "+sqlStmt);
+        try {
+            //prepare the sql stmt
+            PreparedStatement userAppointPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            ResultSet results = userAppointPS.executeQuery();
+
+            while(results.next()){
+                int apptID = results.getInt("Appointment_ID");
+                String title = results.getString("Title");
+                String description = results.getString("Description");
+                String location = results.getString("Location");
+                String type = results.getString("Type");
+                String start = results.getString("Start");
+                String end = results.getString("End");
+                String createDate = results.getString("Create_Date");
+                String createdBy = results.getString("Created_By");
+                String lastUpdate = results.getString("Last_Update");
+                String lastUpdatedBy = results.getString("Last_Updated_By");
+                int custID = results.getInt("Customer_ID");
+                int userID = results.getInt("User_ID");
+                int contactID = results.getInt("Contact_ID");
+                String localStart = TimeZones.convertToCurrentTimeZone(start);
+                String localEnd = TimeZones.convertToCurrentTimeZone(end);
+                String createDateLocal = TimeZones.convertToCurrentTimeZone(createDate);
+                String updateDateLocal = TimeZones.convertToCurrentTimeZone(lastUpdate);
+                appt = new Appointment(apptID,title,description,location,type,localStart,localEnd,createDateLocal,createdBy,updateDateLocal,lastUpdatedBy,custID,userID,contactID);
+                appts.add(appt);
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return appts;
+    }
+
     public static void addAppointment(String title,String description,String location,String type,
                                       String start, String end, String createdBy, String customerId,
                                       String userId, String contactId){

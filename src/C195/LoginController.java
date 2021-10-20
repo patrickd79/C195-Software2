@@ -1,5 +1,7 @@
 package C195;
 
+import C195.Entities.User;
+import C195.Helper.DBUser;
 import C195.Helper.TimeZones;
 import C195.Main;
 import javafx.event.ActionEvent;
@@ -25,7 +27,7 @@ public class LoginController implements Initializable {
     @FXML
     public Label languageDisplayLabel;
     @FXML
-    public TextField userNameField;
+    public  TextField userNameField;
     @FXML
     public PasswordField passwordField;
     @FXML
@@ -36,6 +38,7 @@ public class LoginController implements Initializable {
     public Label userNameLabel;
     @FXML
     public Label passwordLabel;
+    public static String thisUser;
 
     public LoginController(){
     }
@@ -52,6 +55,8 @@ public class LoginController implements Initializable {
     }
 
     public void logInAttempt(ActionEvent event) throws IOException {
+        thisUser = userNameField.getText();
+        System.out.println(thisUser);
         if(verifyLogIn(event)){
             changeScene("mainMenu.fxml", event);
         }else {
@@ -61,8 +66,8 @@ public class LoginController implements Initializable {
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
-        return userNameField.getText().toString().equals("test") &&
-                passwordField.getText().toString().equals("test");
+        return userNameField.getText().equals("test") &&
+                passwordField.getText().equals("test");
     }
 
     public void changeScene(String s, ActionEvent e) throws IOException {
