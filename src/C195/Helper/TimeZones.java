@@ -3,11 +3,14 @@ package C195.Helper;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 public class TimeZones {
@@ -26,6 +29,8 @@ public class TimeZones {
         }
         return converted_date;
     }
+
+
 
     //get the current time zone
     public static String getCurrentTimeZone(){
@@ -71,6 +76,34 @@ public class TimeZones {
             e.printStackTrace();
         }
         return converted_date;
+    }
+
+    public static int getDayOfWeekEST(String Date) {
+        int day = 0;
+        String ESTDate = convertToESTTimeZone(Date);
+        DateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        localFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault().getId()));
+        try {
+            java.util.Date date = localFormat.parse(ESTDate);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            day = cal.get(Calendar.DAY_OF_WEEK);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return day;
+    }
+
+    public static Date convertStringToDate(String dateString){
+        String ESTDate = convertToESTTimeZone(dateString);
+        DateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = new Date();
+        try {
+            date = localFormat.parse(ESTDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
 }

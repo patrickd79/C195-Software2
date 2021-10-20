@@ -1,5 +1,6 @@
 package C195;
 
+import C195.Entities.Appointment;
 import C195.Entities.Contact;
 import C195.Entities.Customer;
 import C195.Entities.User;
@@ -20,6 +21,7 @@ import C195.Helper.*;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.util.Date;
 
 public class AddAppointmentController {
     @FXML
@@ -86,11 +88,11 @@ public class AddAppointmentController {
                 }else{
                     adjustedEndTime = end;
                 }
-
                 System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
                 String startTime = addAppointmentStartDate.getValue().toString() + " "+ adjustedStartTime;
                 String endTime = addAppointmentStartDate.getValue().toString() + " " +adjustedEndTime;
-                if(isDuringOfficeHours(startTime, endTime)){
+                if(isDuringOfficeHours(startTime, endTime) &&
+                        !customerHasOverlappingAppointments(String.valueOf(customer.getCustomer_ID()),startTime, endTime)){
                     DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
                             addAppointmentTypeField.getText(), startTime, endTime,
                             user.getUserName(),
@@ -98,10 +100,11 @@ public class AddAppointmentController {
                             String.valueOf(contact.getContactID()));
                     addApptErrorField.setTextFill(Color.BLACK);
                     addApptErrorField.setText("Appointment Created");
-                    JDBC.closeConnection();
+
                 }else{
                     addApptErrorField.setTextFill(Color.RED);
-                    addApptErrorField.setText("Please enter a start time after 0800 EST and an end time before 2200 EST.");
+                    addApptErrorField.setText("Please enter an appointment date and time that has a start time after 0800 EST and an end time before 2200 EST," +
+                            "and does not overlap any other appointments for this customer.");
                 }
 
 
@@ -116,6 +119,7 @@ public class AddAppointmentController {
         //convert the passed date and times to EST
         String startEST = TimeZones.convertToESTTimeZone(start);
         String endEST = TimeZones.convertToESTTimeZone(end);
+        //String startDayOfWeek
         System.out.println("Start EST Converted: "+startEST+"    End EST Converted: "+endEST);
         // extract the time portion of the string from the dates
         String startTimeEST = UpdateAppointmentController.getTime(startEST);
@@ -126,6 +130,20 @@ public class AddAppointmentController {
         System.out.println("Start Int: "+startTimeInt+ "    End Time Int:"+endTimeInt);
 
         return startTimeInt > 759 && startTimeInt < endTimeInt && endTimeInt < 2201;
+    }
+
+    public boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate){
+        ObservableList<Appointment> appts = DBAppointment.getAppointmentsForASingleCustomerByID(customerID);
+        ObservableList<Date> dates = FXCollections.observableArrayList();
+        Date start = TimeZones.convertStringToDate(startDate);
+        Date end = TimeZones.convertStringToDate(endDate);
+            for(Appointment a : appts){
+                if(start.before(TimeZones.convertStringToDate(a.getEnd())) ||
+                        end.after(TimeZones.convertStringToDate(a.getStart()))){
+                    return true;
+                }
+            }
+            return false;
     }
 
     public String adjustStartTimeTo24H(String time){

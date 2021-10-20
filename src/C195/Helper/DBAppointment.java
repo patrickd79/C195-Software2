@@ -39,6 +39,20 @@ public class DBAppointment {
         }
     }
 
+    public static ObservableList<Appointment> getAppointmentsForASingleCustomerByID(String id){
+        ObservableList<Appointment> appts = FXCollections.observableArrayList();
+        String sqlStmt = " SELECT * FROM APPOINTMENTS WHERE Customer_ID= '"+id+"';";
+        try {
+            //prepare the sql stmt
+            PreparedStatement customerAppointPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            customerAppointPS.execute();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return appts;
+    }
+
     public static void addAppointment(String title,String description,String location,String type,
                                       String start, String end, String createdBy, String customerId,
                                       String userId, String contactId){

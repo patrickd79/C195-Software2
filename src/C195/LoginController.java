@@ -1,5 +1,6 @@
 package C195;
 
+import C195.Helper.TimeZones;
 import C195.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,5 +77,6 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setLanguageDisplayLabel();
         setLabels();
+        System.out.println(TimeZones.getDayOfWeekEST("2021-10-19 08:00:00"));
     }
 }
