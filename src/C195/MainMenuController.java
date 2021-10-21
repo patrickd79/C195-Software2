@@ -33,7 +33,7 @@ public class MainMenuController {
     @FXML
     public Label mainMenuMessages;
     public String userID;
-    public static String textColor;
+    public static Paint color;
 
 
     public void initialize() {
@@ -47,34 +47,35 @@ public class MainMenuController {
 
     public void populateMainMenuLabel(){
         mainMenuMessages.setText(checkUserAppts(user));
+        mainMenuMessages.setTextFill(color);
     }
 
-    public static String checkUserAppts(User user){
+    public static String checkUserAppts(User user) {
         String msg = null;
         Appointment nextAppt;
-        System.out.println("User Name: "+user.getUserName());
-        System.out.println("User ID: "+user.getUserID());
+        //System.out.println("User Name: "+user.getUserName());
+        //System.out.println("User ID: "+user.getUserID());
         ObservableList<Appointment> appts = FXCollections.observableArrayList();
         appts = DBAppointment.getAppointmentsForASingleUserByID(String.valueOf(user.getUserID()));
-        System.out.println("Appts size:"+appts.size());
-        for(Appointment a : appts){
+        //System.out.println("Appts size:"+appts.size());
+        for (Appointment a : appts) {
             System.out.println(a.getUserID());
         }
         String currentDate = getCurrentTime();
-        System.out.println("Current Date: "+currentDate);
+        //System.out.println("Current Date: "+currentDate);
         String ESTCurrentDate = TimeZones.convertToESTTimeZone(currentDate);
-        System.out.println("EST Current Date: "+ESTCurrentDate);
+        //System.out.println("EST Current Date: "+ESTCurrentDate);
         String currentYear = DBAppointment.extractYear(ESTCurrentDate);
-        System.out.println("cur year:"+currentYear);
+        //System.out.println("cur year:"+currentYear);
         String currentMonth = DBAppointment.extractMonth(ESTCurrentDate);
-        System.out.println("current mnth:"+currentMonth);
+        //System.out.println("current mnth:"+currentMonth);
         String currentDay = DBAppointment.extractDay(ESTCurrentDate);
-        System.out.println("current day:"+currentDay);
+        //System.out.println("current day:"+currentDay);
         String time = UpdateAppointmentController.getTime(ESTCurrentDate);
         String currentHour = String.valueOf(AddAppointmentController.getHour(time));
         String currentMinutes = String.valueOf(AddAppointmentController.getMinutes(time));
-        int currentTimeInt = Integer.parseInt(currentHour+currentMinutes);
-        System.out.println("Current Time int:"+currentTimeInt);
+        int currentTimeInt = Integer.parseInt(currentHour + currentMinutes);
+        //System.out.println("Current Time int:"+currentTimeInt);
         String ESTApptDate;
         String apptYear;
         String apptMonth;
@@ -83,33 +84,38 @@ public class MainMenuController {
         String apptMinutes;
         int apptTimeInt = 0;
 
-        for(Appointment a : appts){
+        for (Appointment a : appts) {
             System.out.println("appointment");
             //get the date of the appt in EST
             ESTApptDate = TimeZones.convertToESTTimeZone(a.getStart());
-            System.out.println("EST Appt Date: "+ESTApptDate +"   Appt ID: "+a.getAppointmentID());
+            System.out.println("EST Appt Date: " + ESTApptDate + "   Appt ID: " + a.getAppointmentID());
             apptYear = DBAppointment.extractYear(ESTApptDate);
-            System.out.println("apt year:"+apptYear);
+            System.out.println("apt year:" + apptYear);
             apptMonth = DBAppointment.extractMonth(ESTApptDate);
-            System.out.println("apt mnth:"+apptMonth);
+            System.out.println("apt mnth:" + apptMonth);
             apptDay = DBAppointment.extractDay(ESTApptDate);
-            System.out.println("apt day:"+apptDay);
+            System.out.println("apt day:" + apptDay);
             String apptTime = UpdateAppointmentController.getTime(ESTApptDate);
             apptHour = String.valueOf(AddAppointmentController.getHour(apptTime));
             apptMinutes = String.valueOf(AddAppointmentController.getMinutes(apptTime));
-            apptTimeInt = Integer.parseInt(apptHour+apptMinutes);
+            apptTimeInt = Integer.parseInt(apptHour + apptMinutes);
 
             //check if the date matches current date
-            if(apptYear.equals(currentYear) && apptMonth.equals(currentMonth) && apptDay.equals(currentDay)){
+            if (apptYear.equals(currentYear) && apptMonth.equals(currentMonth) && apptDay.equals(currentDay)) {
                 System.out.println("Date Matches");
-                if(apptTimeInt - currentTimeInt < 15){
-                    msg = "You have an upcoming appointment, Title: "+a.getTitle()+" at "+ a.getStart();
-                    textColor = "RED";
-                }else{
+                if (apptTimeInt - currentTimeInt < 15) {
+                    msg = "You have an upcoming appointment, Title: " + a.getTitle() + " at " + a.getStart();
+                     color = Color.RED;
+                    break;
+                } else {
                     msg = "You have no upcoming appointments within the next 15 minutes.";
-                    textColor = "BLACK";
+                    color = Color.BLACK;
                 }
+            } else {
+                msg = "You have no upcoming appointments within the next 15 minutes.";
+                color = Color.BLACK;
             }
+
         }
         return msg;
     }
