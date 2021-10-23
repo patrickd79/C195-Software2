@@ -12,10 +12,11 @@
       <Label layoutX="285.0" layoutY="14.0" text="Main Menu" />
       <Button layoutX="65.0" layoutY="178.0" mnemonicParsing="false" onAction="#goToUpdateCustomerWindow" text="Update Customer" />
       <Button layoutX="385.0" layoutY="178.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Appointment" />
-      <Button layoutX="398.0" layoutY="271.0" mnemonicParsing="false" onAction="#goToViewAppointmentWindow" text="View Appointments" />
+      <Button layoutX="388.0" layoutY="256.0" mnemonicParsing="false" onAction="#goToViewAppointmentWindow" text="View Appointments" />
       <Label fx:id="mainMenuMessages" layoutX="39.0" layoutY="353.0" prefHeight="141.0" prefWidth="643.0" text="Messages" wrapText="true">
          <font>
             <Font size="18.0" />
          </font></Label>
+      <Button layoutX="65.0" layoutY="256.0" mnemonicParsing="false" onAction="#goToUpdateReportsWindow" text="Reports" />
    </children>
 </AnchorPane>

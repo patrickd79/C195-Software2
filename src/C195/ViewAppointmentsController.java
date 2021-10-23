@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class ViewAppointmentsController {
     @FXML
     public TableView<Appointment> tableView;

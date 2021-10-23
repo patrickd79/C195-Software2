@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="662.0" prefWidth="841.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.ReportsController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="301.0" layoutY="14.0" prefHeight="44.0" prefWidth="202.0" text="Reports">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="monthsCustomerHasApptsCombo" layoutX="54.0" layoutY="130.0" prefHeight="28.0" prefWidth="290.0" promptText="Months Customer has Appointments" />
+      <Label layoutX="51.0" layoutY="97.0" prefHeight="18.0" prefWidth="384.0" text="Choose a month to view total appointments for this customer." />
+      <TextField fx:id="totalApptsforCustomerMonthField" layoutX="46.0" layoutY="252.0" prefHeight="26.0" prefWidth="102.0" promptText="Total appointments for customer for selected month" text="Total for Month">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="50.0" layoutY="220.0" prefHeight="18.0" prefWidth="321.0" text="Total appointments for selected month." />
+      <ComboBox fx:id="typesCombo" layoutX="50.0" layoutY="331.0" prefHeight="28.0" prefWidth="371.0" promptText="Types of appointments for this customer" />
+      <TextField fx:id="totalApptByType" layoutX="46.0" layoutY="473.0" prefHeight="26.0" prefWidth="102.0" promptText="Total Appts by Type" text="Total by Type" />
+      <Label layoutX="46.0" layoutY="437.0" prefHeight="18.0" prefWidth="164.0" text="Total  appointmets by type." />
+      <Label layoutX="512.0" layoutY="64.0" prefHeight="23.0" prefWidth="192.0" text="Customer to Query">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="51.0" layoutY="58.0" prefHeight="34.0" prefWidth="202.0" text="By Month for Customer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="46.0" layoutY="295.0" prefHeight="26.0" prefWidth="213.0" text="By Type for Customer">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="userApptReportBtn" layoutX="512.0" layoutY="324.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="182.0" text="Request User Report" />
+      <Label layoutX="512.0" layoutY="249.0" prefHeight="31.0" prefWidth="213.0" text="User to Query">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="512.0" layoutY="282.0" promptText="Enter a User ID" />
+      <Button fx:id="customerMonthReportBtn" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Get Report" />
+      <Button fx:id="customerTypeReportBtn" layoutX="50.0" layoutY="374.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" text="GetReport" />
+      <TextField layoutX="512.0" layoutY="411.0" prefHeight="26.0" prefWidth="182.0" promptText="Total Appointments for User" />
+      <Label layoutX="512.0" layoutY="374.0" prefHeight="26.0" prefWidth="192.0" text="Total Appointments for User" />
+      <Label fx:id="reportErrorMsgField" layoutX="166.0" layoutY="499.0" prefHeight="55.0" prefWidth="607.0" />
+      <Button fx:id="getCustomerBtn" layoutX="519.0" layoutY="146.0" mnemonicParsing="false" onAction="#getCustomerAppts" prefHeight="31.0" prefWidth="182.0" text="Retreive Customer Data" />
+      <Button layoutX="576.0" layoutY="604.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" prefHeight="31.0" prefWidth="123.0" text="Go to Main Menu" />
+      <ComboBox fx:id="customersCombo" layoutX="513.0" layoutY="103.0" prefHeight="27.0" prefWidth="213.0" promptText="Customers" />
+   </children>
+</AnchorPane>
