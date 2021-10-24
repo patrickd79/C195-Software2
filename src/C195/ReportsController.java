@@ -69,17 +69,23 @@ public class ReportsController {
     }
 
     public void getCustomerAppts(ActionEvent event) {
-
+        try {
             customerID = customersCombo.getValue();
-             customer = DBCustomer.getACustomerByID(Integer.parseInt(customerID));
-             String name = customer.getCustomer_Name();
+            customer = DBCustomer.getACustomerByID(Integer.parseInt(customerID));
+            String name = customer.getCustomer_Name();
             appts = DBAppointment.getAppointmentsForASingleCustomerByID(customerID);
             //System.out.println("Customer Name : "+name);
             populateComboBoxCustomerApptMonths();
             populateComboBoxCustomerApptTypes();
             System.out.println("Methods ran");
             reportErrorMsgField.setTextFill(Color.BLACK);
-            reportErrorMsgField.setText("Retrieving appointments for Customer ID: "+customerID+", Name: "+name);
+            reportErrorMsgField.setText("Retrieving appointments for Customer ID: " + customerID + ", Name: " + name);
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            reportErrorMsgField.setTextFill(Color.RED);
+            reportErrorMsgField.setText("Please choose a customer to query.");
+        }
     }
 
     public void getCustomerReportsByMonth(ActionEvent event){
@@ -98,6 +104,24 @@ public class ReportsController {
         catch (Exception ex){
             ex.printStackTrace();
             reportErrorMsgField.setText("Please choose a month.");
+        }
+    }
+
+    public void getCustomerReportsByType(ActionEvent event){
+        try {
+            int count = 0;
+            for (Appointment a : appts) {
+                String type = a.getType();
+                String requestedType = typesCombo.getValue();
+                if(type.equals(requestedType)){
+                    count++;
+                }
+            }
+            totalApptByType.setText(String.valueOf(count));
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            reportErrorMsgField.setText("Please choose a type.");
         }
     }
 
