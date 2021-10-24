@@ -47,7 +47,7 @@
          </font>
       </Label>
       <TextField layoutX="512.0" layoutY="282.0" promptText="Enter a User ID" />
-      <Button fx:id="customerMonthReportBtn" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" text="Get Report" />
+      <Button fx:id="customerMonthReportBtn" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" onAction="#getCustomerReportsByMonth" prefHeight="31.0" prefWidth="123.0" text="Get Report" />
       <Button fx:id="customerTypeReportBtn" layoutX="50.0" layoutY="374.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="116.0" text="GetReport" />
       <TextField layoutX="512.0" layoutY="411.0" prefHeight="26.0" prefWidth="182.0" promptText="Total Appointments for User" />
       <Label layoutX="512.0" layoutY="374.0" prefHeight="26.0" prefWidth="192.0" text="Total Appointments for User" />

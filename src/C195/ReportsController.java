@@ -23,25 +23,25 @@ public class ReportsController {
     @FXML
     public ComboBox<String> monthsCustomerHasApptsCombo;
     @FXML
-    public static TextField totalApptsforCustomerMonthField;
+    public TextField totalApptsforCustomerMonthField;
     @FXML
     public ComboBox<String> typesCombo;
     @FXML
-    public static TextField customerToQueryField;
+    public TextField customerToQueryField;
     @FXML
-    public static TextField totalApptByType;
+    public TextField totalApptByType;
     @FXML
-    public static Button userApptReportBtn;
+    public Button userApptReportBtn;
     @FXML
-    public static Button customerMonthReportBtn;
+    public Button customerMonthReportBtn;
     @FXML
-    public static Button customerTypeReportBtn;
+    public Button customerTypeReportBtn;
     @FXML
-    public static Label reportErrorMsgField;
+    public Label reportErrorMsgField;
     @FXML
-    public static Button getCustomerBtn;
+    public Button getCustomerBtn;
 
-    public static String customerID;
+    public String customerID;
     @FXML
     public ComboBox<String> customersCombo;
 
@@ -78,11 +78,27 @@ public class ReportsController {
             populateComboBoxCustomerApptMonths();
             populateComboBoxCustomerApptTypes();
             System.out.println("Methods ran");
-            //reportErrorMsgField.setTextFill(Color.BLACK);
-            //reportErrorMsgField.setText("Retrieving appointments for Customer ID: "+customerID+", Name: "+name);
+            reportErrorMsgField.setTextFill(Color.BLACK);
+            reportErrorMsgField.setText("Retrieving appointments for Customer ID: "+customerID+", Name: "+name);
+    }
 
+    public void getCustomerReportsByMonth(ActionEvent event){
+        try {
+            int count = 0;
+            for (Appointment a : appts) {
 
-
+                String month = DBAppointment.extractMonth(a.getStart());
+                String requestedMonth = monthsCustomerHasApptsCombo.getValue();
+                if(month.equals(requestedMonth)){
+                    count++;
+                }
+            }
+            totalApptsforCustomerMonthField.setText(String.valueOf(count));
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+            reportErrorMsgField.setText("Please choose a month.");
+        }
     }
 
     public void populateCustomerCombo(){

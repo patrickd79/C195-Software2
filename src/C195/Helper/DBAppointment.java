@@ -39,6 +39,8 @@ public class DBAppointment {
         }
     }
 
+
+
     public static ObservableList<Appointment> getAppointmentsForASingleCustomerByID(String id){
         Appointment appt;
         ObservableList<Appointment> appts = FXCollections.observableArrayList();
