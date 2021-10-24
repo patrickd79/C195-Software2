@@ -40,20 +40,20 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="userApptReportBtn" layoutX="512.0" layoutY="324.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="182.0" text="Request User Report" />
+      <Button fx:id="userApptReportBtn" layoutX="512.0" layoutY="324.0" mnemonicParsing="false" onAction="#getUserApptCount" prefHeight="31.0" prefWidth="182.0" text="Request User Report" />
       <Label layoutX="512.0" layoutY="249.0" prefHeight="31.0" prefWidth="213.0" text="User to Query">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="512.0" layoutY="282.0" promptText="Enter a User ID" />
       <Button fx:id="customerMonthReportBtn" layoutX="54.0" layoutY="178.0" mnemonicParsing="false" onAction="#getCustomerReportsByMonth" prefHeight="31.0" prefWidth="123.0" text="Get Report" />
       <Button fx:id="customerTypeReportBtn" layoutX="50.0" layoutY="374.0" mnemonicParsing="false" onAction="#getCustomerReportsByType" prefHeight="31.0" prefWidth="116.0" text="GetReport" />
-      <TextField layoutX="512.0" layoutY="411.0" prefHeight="26.0" prefWidth="182.0" promptText="Total Appointments for User" />
+      <TextField fx:id="userTotalApptField" layoutX="512.0" layoutY="411.0" prefHeight="26.0" prefWidth="182.0" promptText="Total Appointments for User" />
       <Label layoutX="512.0" layoutY="374.0" prefHeight="26.0" prefWidth="192.0" text="Total Appointments for User" />
       <Label fx:id="reportErrorMsgField" layoutX="166.0" layoutY="499.0" prefHeight="55.0" prefWidth="607.0" />
       <Button fx:id="getCustomerBtn" layoutX="519.0" layoutY="146.0" mnemonicParsing="false" onAction="#getCustomerAppts" prefHeight="31.0" prefWidth="182.0" text="Retreive Customer Data" />
       <Button layoutX="576.0" layoutY="604.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" prefHeight="31.0" prefWidth="123.0" text="Go to Main Menu" />
       <ComboBox fx:id="customersCombo" layoutX="513.0" layoutY="103.0" prefHeight="27.0" prefWidth="213.0" promptText="Customers" />
+      <ComboBox fx:id="userCombo" layoutX="513.0" layoutY="283.0" prefHeight="27.0" prefWidth="202.0" promptText="Users" />
    </children>
 </AnchorPane>

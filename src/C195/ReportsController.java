@@ -3,6 +3,7 @@ package C195;
 import C195.Entities.Appointment;
 import C195.Entities.Contact;
 import C195.Entities.Customer;
+import C195.Entities.User;
 import C195.Helper.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,11 +41,16 @@ public class ReportsController {
     public Label reportErrorMsgField;
     @FXML
     public Button getCustomerBtn;
-
-    public String customerID;
     @FXML
     public ComboBox<String> customersCombo;
-
+    @FXML
+    public ComboBox<String> userCombo;
+    @FXML
+    public TextField userTotalApptField;
+    public String customerID;
+    public String userID;
+    User user;
+    String userApptCountResult;
     Customer customer;
 
     public static ObservableList<Appointment> appts = FXCollections.observableArrayList();
@@ -52,12 +58,15 @@ public class ReportsController {
     public static ObservableList<String> apptTypes = FXCollections.observableArrayList();
     public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     public static ObservableList<String> customerIDs = FXCollections.observableArrayList();
-
+    public static ObservableList<User> users = FXCollections.observableArrayList();
+    public static ObservableList<String> userIDs = FXCollections.observableArrayList();
 
     public void initialize() {
         JDBC.openConnection();
         customers = DBCustomer.getAllCustomers();
+        users = DBUser.getAllUsers();
         populateCustomerCombo();
+        populateUserCombo();
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
@@ -66,6 +75,13 @@ public class ReportsController {
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
         window.setScene(mainMenuScene);
         window.show();
+    }
+
+    public void getUserApptCount(ActionEvent event){
+        userID = userCombo.getValue();
+        userApptCountResult = String.valueOf(DBAppointment.getApptCountForAUser(userID));
+        userTotalApptField.setText(userApptCountResult);
+
     }
 
     public void getCustomerAppts(ActionEvent event) {
@@ -77,7 +93,7 @@ public class ReportsController {
             //System.out.println("Customer Name : "+name);
             populateComboBoxCustomerApptMonths();
             populateComboBoxCustomerApptTypes();
-            System.out.println("Methods ran");
+            //System.out.println("Methods ran");
             reportErrorMsgField.setTextFill(Color.BLACK);
             reportErrorMsgField.setText("Retrieving appointments for Customer ID: " + customerID + ", Name: " + name);
         }
@@ -132,6 +148,15 @@ public class ReportsController {
             customerIDs.add(id);
         }
         customersCombo.setItems(customerIDs);
+    }
+
+    public void populateUserCombo(){
+        String id;
+        for(User u : users){
+            id = String.valueOf(u.getUserID());
+            userIDs.add(id);
+        }
+        userCombo.setItems(userIDs);
     }
 
     public void populateComboBoxCustomerApptMonths(){

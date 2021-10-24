@@ -14,6 +14,23 @@ import java.util.Date;
 public class DBAppointment {
     public Connection connection;
 
+    public static int getApptCountForAUser(String id){
+        int apptCount = 0;
+        String sqlStmt = "SELECT COUNT(Appointment_ID) AS Appointment_Count FROM APPOINTMENTS WHERE User_ID = '"+id+"';";
+        try {
+            //prepare the sql stmt
+            PreparedStatement getApptCountPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            ResultSet results = getApptCountPS.executeQuery();
+            while(results.next()) {
+                 apptCount = results.getInt("Appointment_Count");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return apptCount;
+    }
+
     public static void deleteAppointment(String id){
         String sqlStmt = " DELETE FROM APPOINTMENTS WHERE Appointment_ID= '"+id+"';";
         try {
