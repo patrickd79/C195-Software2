@@ -16,7 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -56,13 +60,32 @@ public class LoginController implements Initializable {
 
     public void logInAttempt(ActionEvent event) throws IOException {
         thisUser = userNameField.getText();
-        System.out.println(thisUser);
+        String loginMessage;
+        //System.out.println(thisUser);
         if(verifyLogIn(event)){
+           loginMessage = getLoginInfo(thisUser, "Successful");
+           loginLogging(loginMessage);
             changeScene("mainMenu.fxml", event);
         }else {
+            loginMessage = getLoginInfo(thisUser, "Unsuccessful");
+            loginLogging(loginMessage);
             errorMessageLabel.setText(Main.resourceBundle.getString("IncorrectUsernameOrPassword"));
                 logInBtn.setText(Main.resourceBundle.getString("Retry"));
             }
+    }
+
+    public void loginLogging(String message) throws IOException {
+        File file = new File("login_activity.txt");
+        FileWriter fileWriter = new FileWriter(file, true);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+        printWriter.println(message);
+        printWriter.println(System.lineSeparator());
+        printWriter.close();
+    }
+
+    public String getLoginInfo(String user, String result){
+        String timeStamp = TimeZones.getUTCTime();
+        return "Login Attempt  "+"User: "+user+", Result: "+result+", Timestamp: "+timeStamp;
     }
 
     public boolean verifyLogIn(ActionEvent e) throws IOException {
