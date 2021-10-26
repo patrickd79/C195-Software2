@@ -8,8 +8,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This is a helper class to access User data
+ * @author patrickdenney
+ */
 public class DBUser {
-
+    /**
+     *
+     * @param name user name
+     * @return Returns a User object with the name matching the one passed in
+     */
     public static User getAUserByName(String name){
         User user = null;
         try{
@@ -42,6 +50,11 @@ public class DBUser {
         return user;
     }
 
+    /**
+     *
+     * @param id user id
+     * @return Returns a User object with an id matching the id passed in
+     */
     public static User getAUserByID(int id){
         User user = null;
         try{
@@ -66,6 +79,10 @@ public class DBUser {
         return user;
     }
 
+    /**
+     *
+     * @return Returns an ObservableList<User> off all users in the database
+     */
     public static ObservableList<User> getAllUsers(){
         ObservableList<User> userList = FXCollections.observableArrayList();
         User user = null;

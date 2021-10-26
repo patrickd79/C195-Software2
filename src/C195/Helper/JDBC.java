@@ -1,23 +1,25 @@
 package C195.Helper;
 
 import javafx.scene.control.Alert;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
+/**
+ * This is the class used to access the database and open and close the connection
+ * @author patrickdenney
+ */
 public abstract class JDBC {
     private static final String DBName = "client_schedule";
     //private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DBName + "?connectionTimeZone = SERVER";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/" + DBName + "?connectionTimeZone = UTC";
-
-    //jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-
     private static final String username = "sqlUser";
     private static final String password = "Passw0rd!";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     public static Connection connection;
 
+    /**
+     * Method to open the connection to the database
+     */
     public static void openConnection(){
         try{
             Class.forName(driver);//locate driver
@@ -33,10 +35,18 @@ public abstract class JDBC {
             alert.showAndWait();
         }
     }
+
+    /**
+     *
+     * @return Returns an instance of the Connection object
+     */
     public static Connection getConnection(){
         return connection;
     }
 
+    /**
+     * Closes the connection to the database
+     */
     public static void closeConnection() {
         try{
             connection.close();

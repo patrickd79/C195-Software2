@@ -2,10 +2,8 @@ package C195.Helper;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -13,8 +11,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * This is a helper class to manage conversions between time zones
+ */
 public class TimeZones {
-
+    /**
+     *
+     * @param Date
+     * @return Returns a string representing the time in the current timezone from UTC
+     */
     public static String convertToCurrentTimeZone(String Date) {
         String converted_date = "";
         try {
@@ -31,15 +36,20 @@ public class TimeZones {
     }
 
 
-
-    //get the current time zone
+    /**
+     *
+     * @return Returns the user's current timezone
+     */
     public static String getCurrentTimeZone(){
         TimeZone tz = Calendar.getInstance().getTimeZone();
         //System.out.println(tz.getDisplayName());
         return tz.getID();
     }
 
-    //convert from local time to UTC
+    /**
+     *
+     * @return Returns the current time in UTC time
+     */
     public static String getUTCTime(){
         LocalDateTime ldt = LocalDateTime.now();
         ZonedDateTime zdt = ZonedDateTime.of(ldt, ZoneId.systemDefault());
@@ -47,7 +57,11 @@ public class TimeZones {
         Timestamp timestamp = Timestamp.valueOf(utc.toLocalDateTime());
         return timestamp.toString();
     }
-
+    /**
+     *
+     * @param Date
+     * @return Returns a string representing the time in UTC from the user's current time
+     */
     public static String convertToUTCTimeZone(String Date) {
         String converted_date = "";
         try {
@@ -62,7 +76,11 @@ public class TimeZones {
         }
         return converted_date;
     }
-
+    /**
+     *
+     * @param Date
+     * @return Returns a string representing the time in EST from the user's current time
+     */
     public static String convertToESTTimeZone(String Date) {
         String converted_date = "";
         try {
@@ -78,6 +96,11 @@ public class TimeZones {
         return converted_date;
     }
 
+    /**
+     *
+     * @param Date
+     * @return Returns the day of the week as a string in EST converted from the date string passed in
+     */
     public static int getDayOfWeekEST(String Date) {
         int day = 0;
         String ESTDate = convertToESTTimeZone(Date);
@@ -94,6 +117,11 @@ public class TimeZones {
         return day;
     }
 
+    /**
+     *
+     * @param dateString
+     * @return Returns a Date object that has been parsed from the date string passed in
+     */
     public static Date convertStringToDate(String dateString){
         String ESTDate = convertToESTTimeZone(dateString);
         DateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

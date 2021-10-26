@@ -3,12 +3,19 @@ package C195.Helper;
 import C195.Entities.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import java.sql.*;
-import java.time.Instant;
-
+/**
+ * This is a helper class to access Countries data
+ * @author patrickdenney
+ */
 public class DBCountries {
-
+    /**
+     *
+     * @return Returns an ObservableList<Country> of all the countries in the database
+     */
     public static ObservableList<Country> getAllCountries(){
         ObservableList<Country> countryList = FXCollections.observableArrayList();
         try{
@@ -32,17 +39,4 @@ public class DBCountries {
     }
 
 
-
-    /*public static void addCountry(String name, Date createdDate){
-
-        String sql = "INSERT into Countries(Country, Create_Date) Values('"+name+"', '"+createdDate+"');";
-        try {
-            //prepare the sql stmt
-            PreparedStatement countryPS = JDBC.getConnection().prepareStatement(sql);
-            //execute the sql command
-             countryPS.execute();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }*/
 }

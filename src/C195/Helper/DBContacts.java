@@ -1,17 +1,22 @@
 package C195.Helper;
 
 import C195.Entities.Contact;
-import C195.Entities.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
+/**
+ * This is a helper class to access the Contacts data
+ * @author patrickdenney
+ */
 public class DBContacts {
-
+    /**
+     *
+     * @param name contact name
+     * @return Returns the Contact object that has a name that matches the name passed
+     */
     public static Contact getAContactByName(String name){
         Contact contact = null;
         try{
@@ -30,7 +35,11 @@ public class DBContacts {
         }
         return contact;
     }
-
+    /**
+     *
+     * @param id contact id
+     * @return Returns the Contact object that has a id as the id passed in
+     */
     public static Contact getAContactByID(String id){
         Contact contact = null;
         try{
@@ -50,7 +59,10 @@ public class DBContacts {
         return contact;
     }
 
-
+    /**
+     *
+     * @return Returns an ObservableList<Contact> of all the contacts in the database
+     */
     public static ObservableList<Contact> getAllContacts() {
         ObservableList<Contact> contactList = FXCollections.observableArrayList();
         Contact contact = null;

@@ -6,27 +6,31 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
+/**
+ * This is a helper class to access Customer data
+ * @author patrickdenney
+ */
 public class DBCustomer {
 
 
-
+    /**
+     * Updates the data for the customer specified by the customer id
+     * @param id customer id
+     * @param name customer name
+     * @param address customer address
+     * @param postalCode customer postal code
+     * @param phone customer phone number
+     * @param updatedBy user updating the record
+     * @param divID customer's first level division
+     */
     public static void updateCustomer(String id, String name, String address, String postalCode, String phone, String updatedBy, String divID){
 
         //this creates a local timestamp
         Date date = new Date();
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
-        String update_date = sqlDate.toString();
+        String update_date = TimeZones.convertToUTCTimeZone(sqlDate.toString()) ;
         System.out.println(update_date);
 
         String sqlStmt = "UPDATE Customers " +
@@ -52,6 +56,10 @@ public class DBCustomer {
 
     }
 
+    /**
+     * Deletes the specified customer from the database
+     * @param id customer id
+     */
     public static void deleteCustomer(String id){
         String sqlStmt = "DELETE FROM Customers WHERE Customer_ID = "+id+";";
 
@@ -65,6 +73,15 @@ public class DBCustomer {
         }
     }
 
+    /**
+     * Adds a customer object to the database with the specified data
+     * @param name customer name
+     * @param address customer address
+     * @param postalCode customer's postal code
+     * @param phone customer's phone number
+     * @param createdBy user creating the record
+     * @param divID customer's first level division
+     */
     public static void addCustomer(String name, String address, String postalCode, String phone, String createdBy, String divID){
 
         //this creates a local timestamp
@@ -86,6 +103,11 @@ public class DBCustomer {
         }
     }
 
+    /**
+     *
+     * @param name customer name
+     * @return returns a Customer object that has a name matching the name passed in
+     */
     public static Customer getACustomerByName(String name){
         ObservableList<Customer> customer = FXCollections.observableArrayList();
         Customer cust = null;
@@ -119,6 +141,11 @@ public class DBCustomer {
         return cust;
     }
 
+    /**
+     *
+     * @param id customer id
+     * @return Returns a Customer object with an id matching the id passed in
+     */
     public static Customer getACustomerByID(int id){
         ObservableList<Customer> customer = FXCollections.observableArrayList();
         Customer cust = null;
@@ -151,6 +178,10 @@ public class DBCustomer {
         return cust;
     }
 
+    /**
+     *
+     * @return Returns an ObservableList<Customer> of all customers in the database
+     */
     public static ObservableList<Customer> getAllCustomers(){
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         Customer cust = null;
@@ -182,8 +213,5 @@ public class DBCustomer {
         }
         return customerList;
     }
-
-
-
 
 }

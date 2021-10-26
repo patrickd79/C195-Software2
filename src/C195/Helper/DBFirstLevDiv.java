@@ -6,7 +6,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This is a helper class to access the First Level Division data
+ * @author patrickdenney
+ */
 public class DBFirstLevDiv {
+    /**
+     *
+     * @param countryId country id
+     * @return Returns an ObservableList<String> of all the division names in the database that have a
+     * country id matching the id passed in
+     */
     public static ObservableList<String> getDivNames(int countryId){
         ObservableList<String> divNames= FXCollections.observableArrayList();
         String sqlStmt = "Select Division_ID, Division from FIRST_LEVEL_DIVISIONS where Country_ID = "+countryId+";";
@@ -28,7 +38,11 @@ public class DBFirstLevDiv {
         }
         return divNames;
     }
-
+    /**
+     *
+     * @param divName division name
+     * @return Returns a String with a value of the division id of the division with the same name as the name passed in
+     */
     public static String getDivID(String divName) throws SQLException {
         ResultSet results = null;
         int divID = 0;
@@ -48,20 +62,4 @@ public class DBFirstLevDiv {
         return String.valueOf(divID);
     }
 
-
-
-
-
-    /*public static void addCountry(String name, Date createdDate){
-
-        String sql = "INSERT into Countries(Country, Create_Date) Values('"+name+"', '"+createdDate+"');";
-        try {
-            //prepare the sql stmt
-            PreparedStatement countryPS = JDBC.getConnection().prepareStatement(sql);
-            //execute the sql command
-             countryPS.execute();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
-    }*/
 }

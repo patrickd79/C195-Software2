@@ -11,9 +11,18 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This class is a helper class for accessing and manipulating Appointment data.
+ * @author Patrick Denney
+ */
 public class DBAppointment {
     public Connection connection;
 
+    /**
+     *
+     * @param id user ID
+     * @return Returns the total number of appointments for a specified user
+     */
     public static int getApptCountForAUser(String id){
         int apptCount = 0;
         String sqlStmt = "SELECT COUNT(Appointment_ID) AS Appointment_Count FROM APPOINTMENTS WHERE User_ID = '"+id+"';";
@@ -31,6 +40,10 @@ public class DBAppointment {
         return apptCount;
     }
 
+    /**
+     * Deletes specified appointment
+     * @param id appointment ID
+     */
     public static void deleteAppointment(String id){
         String sqlStmt = " DELETE FROM APPOINTMENTS WHERE Appointment_ID= '"+id+"';";
         try {
@@ -43,7 +56,10 @@ public class DBAppointment {
         }
     }
 
-
+    /**
+     * Deletes all the appointments for a specified customer
+     * @param id customer ID
+     */
     public static void deleteAppointmentsForASingleCustomer(String id){
         String sqlStmt = " DELETE FROM APPOINTMENTS WHERE Customer_ID= '"+id+"';";
         try {
@@ -57,7 +73,11 @@ public class DBAppointment {
     }
 
 
-
+    /**
+     *
+     * @param id customer ID
+     * @return Returns an observable list of all the appointments for a specified customer
+     */
     public static ObservableList<Appointment> getAppointmentsForASingleCustomerByID(String id){
         Appointment appt;
         ObservableList<Appointment> appts = FXCollections.observableArrayList();
@@ -96,6 +116,11 @@ public class DBAppointment {
         return appts;
     }
 
+    /**
+     *
+     * @param id user id
+     * @return Returns an observable list of all appointments for a specified user
+     */
     public static ObservableList<Appointment> getAppointmentsForASingleUserByID(String id){
         Appointment appt;
         ObservableList<Appointment> appts = FXCollections.observableArrayList();
@@ -135,6 +160,19 @@ public class DBAppointment {
         return appts;
     }
 
+    /**
+     * Adds an appointment to the database
+     * @param title appointment title
+     * @param description appointment description
+     * @param location appointment location
+     * @param type appointment type
+     * @param start appointment start date and time
+     * @param end appointment end date and time
+     * @param createdBy user who created the appointment
+     * @param customerId customer associated with the appointment
+     * @param userId user associated with the appointment
+     * @param contactId contact associated with the appointment
+     */
     public static void addAppointment(String title,String description,String location,String type,
                                       String start, String end, String createdBy, String customerId,
                                       String userId, String contactId){
@@ -158,6 +196,22 @@ public class DBAppointment {
         }
     }
 
+    /**
+     * Updates the data for a specified appointment
+     * @param id appointment id
+     * @param title appointment title
+     * @param description appointment description
+     * @param location appointment location
+     * @param type appointment type
+     * @param startDate start date
+     * @param startTime start time
+     * @param endDate end date
+     * @param endTime end time
+     * @param updatedBy user updating the appointment
+     * @param customerID customer associated with the appointment
+     * @param userID user associated with the appointment
+     * @param contactID contact associated with the appointment
+     */
     public static void updateAppointment(String id, String title, String description, String location,
                                          String type, String startDate,String startTime, String endDate,String endTime,String updatedBy, String customerID,
                                          String userID, String contactID){
@@ -193,6 +247,10 @@ public class DBAppointment {
 
     }
 
+    /**
+     *
+     * @return Returns an observable list of all the appointments in the database
+     */
     public static ObservableList<Appointment> getAllAppointments() {
         ObservableList<Appointment> apptList = FXCollections.observableArrayList();
         Appointment appt = null;
@@ -231,6 +289,11 @@ public class DBAppointment {
         return apptList;
     }
 
+    /**
+     *
+     * @param id appointment id
+     * @return Returns an appointment object
+     */
     public static Appointment getAppointmentByID(String id) {
         Appointment appt = null;
         try{
@@ -269,6 +332,11 @@ public class DBAppointment {
         return appt;
     }
 
+    /**
+     *
+     * @param date a String of the date value of which to extract the month value from
+     * @return a String with a value of the month from 1-12
+     */
     public static String extractMonth(String date){
         char[] ca = date.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -281,6 +349,11 @@ public class DBAppointment {
         return month;
     }
 
+    /**
+     *
+     * @param date a String of the date value of which to extract the year value from
+     * @return a 4 digit string which corresponds to the value of the year
+     */
     public static String extractYear(String date){
         char[] ca = date.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -293,6 +366,11 @@ public class DBAppointment {
         return year;
     }
 
+    /**
+     *
+     * @param date a String of the date value of which to extract the day value from
+     * @return a 2 digit string corresponding to the day of the month value
+     */
     public static String extractDay(String date){
         char[] ca = date.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -305,6 +383,11 @@ public class DBAppointment {
         return day;
     }
 
+    /**
+     *
+     * @param Date a String of the date value of which to extract the week of the year value from
+     * @return a 2 digit string corresponding to the week of the year value
+     */
     public static String extractWeek(String Date)  {
         Calendar calendar = Calendar.getInstance();
         int year = Integer.parseInt(extractYear(Date));
@@ -318,6 +401,10 @@ public class DBAppointment {
         return String.valueOf(calendar.get(Calendar.WEEK_OF_YEAR));
     }
 
+    /**
+     *
+     * @return Returns an observable list of appointments that have start dates matching the current month
+     */
     public static ObservableList<Appointment> getAppointmentsByMonth() {
         ObservableList<Appointment> appts = getAllAppointments();
         ObservableList<Appointment> apptsThatMatch = FXCollections.observableArrayList();
@@ -334,11 +421,14 @@ public class DBAppointment {
             if(apptMonth.equals(currentMonth) && apptYear.equals(currentYear)){
                 apptsThatMatch.add(a);
             }
-            //System.out.println(currentMonth +": "+ extractMonth(a.getStart()));
         }
         return apptsThatMatch;
     }
 
+    /**
+     *
+     * @return Returns an observable list of appointments that have start dates falling within the current week
+     */
     public static ObservableList<Appointment> getAppointmentsByWeek() {
         ObservableList<Appointment> appts = getAllAppointments();
         ObservableList<Appointment> apptsThatMatch = FXCollections.observableArrayList();
