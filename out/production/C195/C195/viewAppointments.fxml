@@ -8,7 +8,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="774.0" prefWidth="1275.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.ViewAppointmentsController">
+<AnchorPane prefHeight="774.0" prefWidth="1217.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.ViewAppointmentsController">
     <TableView fx:id="tableView" layoutX="9.0" layoutY="85.0" prefHeight="254.0" prefWidth="1246.0">
         <columns>
             <TableColumn fx:id="IDCol" prefWidth="31.0" text="ID" />
@@ -30,12 +30,12 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
     </TableView>
-   <Button layoutX="1070.0" layoutY="699.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
-   <RadioButton layoutX="91.0" layoutY="617.0" mnemonicParsing="false" onAction="#setCurrentMonthTableView" text="Appointments for Current Month">
+   <Button layoutX="918.0" layoutY="562.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
+   <RadioButton layoutX="91.0" layoutY="468.0" mnemonicParsing="false" onAction="#setCurrentMonthTableView" text="Appointments for Current Month">
       <toggleGroup>
          <ToggleGroup fx:id="apptFilter" />
       </toggleGroup></RadioButton>
-   <RadioButton layoutX="91.0" layoutY="669.0" mnemonicParsing="false" onAction="#setCurrentWeekTableView" text="Appointments for Current Week" toggleGroup="$apptFilter" />
+   <RadioButton layoutX="91.0" layoutY="525.0" mnemonicParsing="false" onAction="#setCurrentWeekTableView" text="Appointments for Current Week" toggleGroup="$apptFilter" />
    <Label fx:id="viewApptErrorField" layoutX="539.0" layoutY="600.0" prefHeight="94.0" prefWidth="309.0" />
-   <Button layoutX="737.0" layoutY="699.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Appointment information" />
+   <Button layoutX="632.0" layoutY="562.0" mnemonicParsing="false" onAction="#goToUpdateAppointmentWindow" text="Update Appointment information" />
 </AnchorPane>

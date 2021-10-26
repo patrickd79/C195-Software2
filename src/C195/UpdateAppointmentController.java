@@ -9,26 +9,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 public class UpdateAppointmentController {
     @FXML
     public Label apptIDLabel;
     @FXML
     public DatePicker updateAppointmentStartDate;
-    @FXML
-    public DatePicker updateAppointmentEndDate;
     @FXML
     public ComboBox<String> customerCombo;
     @FXML
@@ -57,7 +47,6 @@ public class UpdateAppointmentController {
     public TextField lastUpdatedByField;
     @FXML
     public Label updateApptErrorField;
-    private static String apptID;
     @FXML
     public TextField updatingNowField;
     @FXML
@@ -72,6 +61,7 @@ public class UpdateAppointmentController {
     public RadioButton endAMToggle;
     @FXML
     public RadioButton endPMToggle;
+    private static String apptID;
     Appointment appt;
     ObservableList<Contact> contacts = FXCollections.observableArrayList();
     ObservableList<String> contactNames = FXCollections.observableArrayList();
@@ -80,6 +70,11 @@ public class UpdateAppointmentController {
     ObservableList<User> users = FXCollections.observableArrayList();
     ObservableList<String> userNames = FXCollections.observableArrayList();
 
+    /**
+     * Updates the selected appointment record with the data provided.
+     * @param event
+     * @throws IOException
+     */
     public void updateAppointment(ActionEvent event) throws IOException {
         String id = apptID;
         String title = titleField.getText();
@@ -101,7 +96,6 @@ public class UpdateAppointmentController {
         String contactName = contactCombo.getValue();
         Contact contact = DBContacts.getAContactByName(contactName);
         String contactID = String.valueOf(contact.getContactID());
-                //START HERE NEED TO FIX COMBO BOXES AND THE IDS.!!!!!!!!!!!!!!!!!!!!!!!!!!!
         {
             try {
                 String adjustedStartTime;
@@ -146,20 +140,15 @@ public class UpdateAppointmentController {
 
     }
 
-
-
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
-    /*public static LocalDate LOCAL_DATE (String dateString){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return LocalDate.parse(dateString, formatter);
-    }*/
 
+    /**
+     *
+     * @param dateString
+     * @return Returns a string with the date and time without the seconds.
+     */
     public static String getDateAndTimeNoSeconds(String dateString){
         String date;
         StringBuilder sb = new StringBuilder();
@@ -178,6 +167,11 @@ public class UpdateAppointmentController {
         return date;
     }
 
+    /**
+     *
+     * @param dateString
+     * @return Returns a string representing the date without the time.
+     */
     public static String getDateNoTime(String dateString){
         char[] ca = dateString.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -188,6 +182,11 @@ public class UpdateAppointmentController {
         date = sb.toString();
         return date;
     }
+    /**
+     *
+     * @param dateString
+     * @return Returns a string representing the time without the date.
+     */
     public static String getTime(String dateString){
         char[] ca = dateString.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -199,8 +198,9 @@ public class UpdateAppointmentController {
         return time;
     }
 
-
-
+    /**
+     * Populates the text fields with the data for the selected appointment.
+     */
     public void populateAppointmentData(){
 
         String contactID = String.valueOf(appt.getContactID());
@@ -229,21 +229,27 @@ public class UpdateAppointmentController {
         userCombo.setValue(String.valueOf(user.getUserID()));
 
     }
-
+    /**
+     * Adds all the contact names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxContactName(){
         for(Contact c : contacts){
             contactNames.add(c.getContactName());
         }
         contactCombo.setItems(contactNames);
     }
-
+    /**
+     *  Adds all the customer names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxCustomerNames(){
         for(Customer c : customers){
             customerNames.add(String.valueOf(c.getCustomer_ID()));
         }
         customerCombo.setItems(customerNames);
     }
-
+    /**
+     * Adds all the user names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxUserNames(){
         for(User u : users){
             userNames.add(String.valueOf(u.getUserID()));

@@ -1,9 +1,6 @@
 package C195;
 
-import C195.Entities.User;
-import C195.Helper.DBUser;
 import C195.Helper.TimeZones;
-import C195.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -47,10 +43,16 @@ public class LoginController implements Initializable {
     public LoginController(){
     }
 
+    /**
+     * Displays the user's language setting
+     */
     public void setLanguageDisplayLabel(){
         languageDisplayLabel.setText(Main.zoneID + "   " +Main.zone + " : " + Main.userLanguage + " : " + Main.userCountry);
     }
 
+    /**
+     * Sets the information to display in the fields based on the user's language setting.
+     */
     public void setLabels(){
         scheduleLogInLabel.setText(Main.resourceBundle.getString("SchedulingApplication"));
         logInBtn.setText(Main.resourceBundle.getString("login"));
@@ -58,6 +60,12 @@ public class LoginController implements Initializable {
         passwordLabel.setText(Main.resourceBundle.getString("password"));
     }
 
+    /**
+     * Verifies that the log in information is valid and logs the user in if it is valid. If not, it displays
+     * an error message.
+     * @param event
+     * @throws IOException
+     */
     public void logInAttempt(ActionEvent event) throws IOException {
         thisUser = userNameField.getText();
         String loginMessage;
@@ -74,6 +82,11 @@ public class LoginController implements Initializable {
             }
     }
 
+    /**
+     * Writes the log in information to the login activity text file.
+     * @param message
+     * @throws IOException
+     */
     public void loginLogging(String message) throws IOException {
         File file = new File("login_activity.txt");
         FileWriter fileWriter = new FileWriter(file, true);
@@ -83,11 +96,23 @@ public class LoginController implements Initializable {
         printWriter.close();
     }
 
+    /**
+     *
+     * @param user
+     * @param result
+     * @return Returns a string with the log in information so that it can be logged.
+     */
     public String getLoginInfo(String user, String result){
         String timeStamp = TimeZones.getUTCTime();
-        return "Login Attempt  "+"User: "+user+", Result: "+result+", Timestamp: "+timeStamp;
+        return "Login Attempt  "+"User: "+user+", Result: "+result+", Timestamp: "+timeStamp +" UTC";
     }
 
+    /**
+     * Verifies that the username and password are valid.
+     * @param e
+     * @return
+     * @throws IOException
+     */
     public boolean verifyLogIn(ActionEvent e) throws IOException {
         return userNameField.getText().equals("test") &&
                 passwordField.getText().equals("test");

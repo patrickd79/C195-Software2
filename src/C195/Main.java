@@ -4,14 +4,11 @@ package C195;
 
 import C195.Helper.JDBC;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import java.io.IOException;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.Date;
@@ -25,19 +22,33 @@ public class Main extends Application {
     public static String userCountry = Locale.getDefault().getCountry();
     //public static String userLanguage = "fr";
     //public static String userCountry = "CA";
-
     //sets the zone string based on user's local system settings
     public static String zone = ZoneId.systemDefault().getDisplayName(TextStyle.FULL,
             Locale.getDefault());
     public static String zoneID = ZoneId.systemDefault().getId();
     //public static Locale locale = new Locale(userLanguage, userCountry);
-
     public static ResourceBundle resourceBundle;
     //creates an instance of Resource bundle depending on results of setResourceBundle method
-    public static ResourceBundle french = ResourceBundle.getBundle("C195/Bundle", new Locale("fr", "CA") );
-    public static ResourceBundle english = ResourceBundle.getBundle("C195/Bundle", new Locale("en", "US") );
+    public static ResourceBundle french = ResourceBundle.getBundle("C195/Bundle", new Locale("fr", "CA"));
+    public static ResourceBundle english = ResourceBundle.getBundle("C195/Bundle", new Locale("en", "US"));
+    /**
+     * Lambda expression to simplify returning to the main menu from the other windows in the
+     * application. It reduces some of the clutter in the code and abstracts away some
+     * of the repeated code to a simpler lambda expression.
+     */
+    static GoToMain mainScreen = event -> {
+        JDBC.closeConnection();
+        Parent mainMenu = FXMLLoader.load(Main.class.getResource("mainMenu.fxml"));
+        Scene mainMenuScene = new Scene(mainMenu);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(mainMenuScene);
+        window.show();
+    };
 
-    //selects the resource bundle to be used based on the user's language settings
+    /**
+     * Selects the resource bundle to be used based on the user's language settings
+     * @param userLanguage user's default system language
+     */
     public void setResourceBundle(String userLanguage){
         if(userLanguage.equals("fr")){
             resourceBundle = french;
@@ -45,6 +56,8 @@ public class Main extends Application {
             resourceBundle = english;
         }
     }
+
+
 
     @Override
     public void start(Stage stage) throws Exception{
@@ -66,15 +79,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    //changes from one scene to the next
-    public void changeScene(String s, ActionEvent e) throws IOException {
-        Parent newWindow = FXMLLoader.load(getClass().getResource(s));
-        Scene newScene = new Scene(newWindow);
-        Stage window = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        window.setScene(newScene);
-        window.show();
     }
 
     /**

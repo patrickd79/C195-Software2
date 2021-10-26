@@ -45,11 +45,20 @@ public class MainMenuController {
         populateMainMenuLabel();
     }
 
+    /**
+     * Populates the message text for the warning if the user has an appointment within 15 minutes of logging in.
+     */
     public void populateMainMenuLabel(){
         mainMenuMessages.setText(checkUserAppts(user));
         mainMenuMessages.setTextFill(color);
     }
 
+    /**
+     * Checks all of the appointments the user has in the database, and if it finds one that starts
+     * within 15 minutes of the log in, returns that as the message string.
+     * @param user
+     * @return Message string
+     */
     public static String checkUserAppts(User user) {
         String msg = null;
         Appointment nextAppt;
@@ -120,13 +129,21 @@ public class MainMenuController {
         return msg;
     }
 
-
+    /**
+     *
+     * @return Returns the current system time of the user's system.
+     */
     public static String getCurrentTime(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();
         return formatter.format(date);
     }
 
+    /**
+     * Changes window the Add Customer window.
+     * @param event
+     * @throws IOException
+     */
     public void goToAddCustomerWindow(ActionEvent event) throws IOException {
         Parent addCustomerWindow = FXMLLoader.load(getClass().getResource("addCustomer.fxml"));
         Scene addCustomerScene = new Scene(addCustomerWindow);
@@ -134,7 +151,11 @@ public class MainMenuController {
         window.setScene(addCustomerScene);
         window.show();
     }
-
+    /**
+     * Changes window the Update Customer window.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateCustomerWindow(ActionEvent event) throws IOException {
         Parent updateCustomerWindow = FXMLLoader.load(getClass().getResource("chooseCustomerToUpdate.fxml"));
         Scene updateCustomerScene = new Scene(updateCustomerWindow);
@@ -142,7 +163,11 @@ public class MainMenuController {
         window.setScene(updateCustomerScene);
         window.show();
     }
-
+    /**
+     * Changes window the Add Appointment window.
+     * @param event
+     * @throws IOException
+     */
     public void goToAddAppointmentWindow(ActionEvent event) throws IOException {
         Parent addAppointmentWindow = FXMLLoader.load(getClass().getResource("addAppointment.fxml"));
         Scene addAppointmentScene = new Scene(addAppointmentWindow);
@@ -150,7 +175,11 @@ public class MainMenuController {
         window.setScene(addAppointmentScene);
         window.show();
     }
-
+    /**
+     * Changes window the View Appointment window.
+     * @param event
+     * @throws IOException
+     */
     public void goToViewAppointmentWindow(ActionEvent event) throws IOException {
         Parent viewAppointmentWindow = FXMLLoader.load(getClass().getResource("viewAppointments.fxml"));
         Scene viewAppointmentScene = new Scene(viewAppointmentWindow);
@@ -158,7 +187,11 @@ public class MainMenuController {
         window.setScene(viewAppointmentScene);
         window.show();
     }
-
+    /**
+     * Changes window the Update Appointment window.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
         Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("chooseAppointmentToUpdate.fxml"));
         Scene updateAppointmentScene = new Scene(updateAppointmentWindow);
@@ -166,7 +199,11 @@ public class MainMenuController {
         window.setScene(updateAppointmentScene);
         window.show();
     }
-
+    /**
+     * Changes window the Reports window.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateReportsWindow(ActionEvent event) throws IOException {
         Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("reports.fxml"));
         Scene updateAppointmentScene = new Scene(updateAppointmentWindow);

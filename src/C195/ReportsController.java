@@ -70,13 +70,13 @@ public class ReportsController {
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
 
+    /**
+     * Retrieves the count of appointments for the specified user and sets the text field with the value.
+     * @param event
+     */
     public void getUserApptCount(ActionEvent event){
         userID = userCombo.getValue();
         userApptCountResult = String.valueOf(DBAppointment.getApptCountForAUser(userID));
@@ -84,6 +84,11 @@ public class ReportsController {
 
     }
 
+    /**
+     * Retrieves all the appointments for the specified customer, and populates the combo boxes
+     * with the months of the appointments and the types.
+     * @param event
+     */
     public void getCustomerAppts(ActionEvent event) {
         try {
             customerID = customersCombo.getValue();
@@ -104,11 +109,14 @@ public class ReportsController {
         }
     }
 
+    /**
+     * Counts the number of appointments the selected customer has in the selected month.
+     * @param event
+     */
     public void getCustomerReportsByMonth(ActionEvent event){
         try {
             int count = 0;
             for (Appointment a : appts) {
-
                 String month = DBAppointment.extractMonth(a.getStart());
                 String requestedMonth = monthsCustomerHasApptsCombo.getValue();
                 if(month.equals(requestedMonth)){
@@ -122,7 +130,10 @@ public class ReportsController {
             reportErrorMsgField.setText("Please choose a month.");
         }
     }
-
+    /**
+     * Counts the number of appointments the selected customer has of the selected type.
+     * @param event
+     */
     public void getCustomerReportsByType(ActionEvent event){
         try {
             int count = 0;
@@ -141,6 +152,9 @@ public class ReportsController {
         }
     }
 
+    /**
+     * Populates the customer combo box with all the customers in the database, for selection.
+     */
     public void populateCustomerCombo(){
         String id;
         for(Customer c : customers){
@@ -149,7 +163,9 @@ public class ReportsController {
         }
         customersCombo.setItems(customerIDs);
     }
-
+    /**
+     * Populates the user combo box with all the users in the database, for selection.
+     */
     public void populateUserCombo(){
         String id;
         for(User u : users){
@@ -159,12 +175,18 @@ public class ReportsController {
         userCombo.setItems(userIDs);
     }
 
+    /**
+     * Checks all of the customer's appointments for a start date month and adds it to a hash set if it is not
+     * already contained there. Then adds all of the discreet month numbers to the observable list,
+     * which then is used to set the combo box items.
+     *
+     */
     public void populateComboBoxCustomerApptMonths(){
-        System.out.println("Method Start");
+        //System.out.println("populateComboBoxCustomerApptMonths Method Start");
         String month;
         HashSet<String> months = new HashSet<>();
-        System.out.println("Start for each");
-        System.out.println("APPTS SIZE: "+ appts.size());
+        //System.out.println("Start for each");
+        //System.out.println("APPTS SIZE: "+ appts.size());
         for(Appointment a : appts){
             //System.out.println("Appointment ID: "+a.getAppointmentID());
             month = DBAppointment.extractMonth(a.getStart());
@@ -174,13 +196,16 @@ public class ReportsController {
             }
         }
         apptMonths.addAll(months);
-        /*for(String am : apptMonths){
-            System.out.println("APPT MNTH:"+ am );
-        }*/
         monthsCustomerHasApptsCombo.setItems(apptMonths);
-        System.out.println("MONTH SET ITEMS WORKS");
+        //System.out.println("MONTH SET ITEMS WORKS");
     }
 
+    /**
+     * Checks all of the customer's appointments for the type and adds it to a hash set if it is not
+     * already contained there. Then adds all of the discreet types to the observable list,
+     * which then is used to set the combo box items.
+     *
+     */
     public void populateComboBoxCustomerApptTypes(){
         String type;
         HashSet<String> types = new HashSet<>();

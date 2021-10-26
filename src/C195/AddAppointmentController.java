@@ -9,18 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import C195.Helper.*;
-
 import java.io.IOException;
-import java.sql.Time;
 import java.util.Date;
 
 public class AddAppointmentController {
@@ -64,7 +55,16 @@ public class AddAppointmentController {
     ObservableList<String> customerNames = FXCollections.observableArrayList();
     ObservableList<User> users = FXCollections.observableArrayList();
     ObservableList<String> userNames = FXCollections.observableArrayList();
+    /**
+     * Lambda to convert an integer to a String. It is useful for
+     * reducing clutter in some of the methods where String.valueOf() is used frequently
+     */
+    StringValue sv = i -> String.valueOf(i);
 
+    /**
+     * Adds an appointment record to the database.
+     * @param event
+     */
     public void addAppointment(ActionEvent event){
 
         try {
@@ -88,23 +88,23 @@ public class AddAppointmentController {
                 }else{
                     adjustedEndTime = end;
                 }
-                System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
+                //System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
                 String startTime = addAppointmentStartDate.getValue().toString() + " "+ adjustedStartTime;
                 String endTime = addAppointmentStartDate.getValue().toString() + " " +adjustedEndTime;
                 if(isDuringOfficeHours(startTime, endTime) &&
-                        !customerHasOverlappingAppointments(String.valueOf(customer.getCustomer_ID()),startTime, endTime)){
+                        !customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime)){
                     DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
                             addAppointmentTypeField.getText(), startTime, endTime,
                             user.getUserName(),
-                            String.valueOf(customer.getCustomer_ID()), String.valueOf(user.getUserID()),
-                            String.valueOf(contact.getContactID()));
+                            sv.str(customer.getCustomer_ID()), sv.str(user.getUserID()),
+                            sv.str(contact.getContactID()));
                     addApptErrorField.setTextFill(Color.BLACK);
                     addApptErrorField.setText("Appointment Created");
 
                 }else if(!isDuringOfficeHours(startTime, endTime)){
                     addApptErrorField.setTextFill(Color.RED);
                     addApptErrorField.setText("Please make sure that appointment time is between 0800 EST and 2200 EST.");
-                }else if(customerHasOverlappingAppointments(String.valueOf(customer.getCustomer_ID()),startTime, endTime)){
+                }else if(customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime)){
                     addApptErrorField.setTextFill(Color.RED);
                     addApptErrorField.setText("Please change the date or time of this appointment. This appointment overlaps another one of the customer's appointments.");
                 }
@@ -117,8 +117,14 @@ public class AddAppointmentController {
             }
     }
 
+    /**
+     *
+     * @param start start date and time of the appointment
+     * @param end end date and time of the appointment
+     * @return Returns true is the appointment's start and end time fall within the office hours.
+     */
     public static boolean isDuringOfficeHours(String start, String end){
-        System.out.println("Start: "+start+"   End: "+end);
+        //System.out.println("Start: "+start+"   End: "+end);
         //convert the passed date and times to EST
         String startEST = TimeZones.convertToESTTimeZone(start);
         String endEST = TimeZones.convertToESTTimeZone(end);
@@ -135,39 +141,43 @@ public class AddAppointmentController {
         return startTimeInt > 759 && startTimeInt < endTimeInt && endTimeInt < 2201;
     }
 
+    /**
+     *
+     * @param customerID
+     * @param startDate
+     * @param endDate
+     * @return Returns true if the customer has another appointment that has overlapping time with the one being passed in.
+     */
     public static boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate){
         ObservableList<Appointment> appts = DBAppointment.getAppointmentsForASingleCustomerByID(customerID);
         ObservableList<Date> dates = FXCollections.observableArrayList();
-        Date start = TimeZones.convertStringToDate(startDate);
-        Date end = TimeZones.convertStringToDate(endDate);
+        Date newApptStart = TimeZones.convertStringToDate(startDate);
+        //System.out.println("customerHasOverlappingAppointments newApptStart == "+ newApptStart);
+        Date newApptEnd = TimeZones.convertStringToDate(endDate);
+        //System.out.println("customerHasOverlappingAppointments newApptEnd == "+ newApptEnd);
             for(Appointment a : appts){
-                if(start.before(TimeZones.convertStringToDate(a.getEnd())) ||
-                        end.after(TimeZones.convertStringToDate(a.getStart()))){
+                Date oldApptStart = TimeZones.convertStringToDate(a.getStart());
+                //System.out.println("customerHasOverlappingAppointments oldApptStart == "+ oldApptStart);
+                Date oldApptEnd = TimeZones.convertStringToDate(a.getEnd());
+                //System.out.println("customerHasOverlappingAppointments oldApptEnd == "+ oldApptEnd);
+                if((newApptStart.before(oldApptEnd) &&
+                        newApptEnd.after(oldApptStart)) || newApptEnd.after(oldApptStart) && newApptStart.before(oldApptStart)){
+                    //System.out.println("customerHasOverlappingAppointments a.start == "+ a.getStart());
+                    //System.out.println("customerHasOverlappingAppointments a.end == "+ a.getEnd());
+                    //System.out.println("customerHasOverlappingAppointments == true");
                     return true;
                 }
             }
+        //System.out.println("customerHasOverlappingAppointments == false");
             return false;
     }
 
-    public String adjustStartTimeTo24H(String time){
-        String adjustedTime;
-        //adjust time to a 24 hour clock for the start time
-        if(startTimePMToggle.isSelected() && getHour(time) < 12){
-            return adjustedTime = (getHour(time) + 12) +":"+ getMinutes(time);
-        }else{
-            return adjustedTime = time;
-        }
-    }
-
-    public String adjustEndTimeTo24H(String time){
-        String adjustedTime;
-        //adjust time to a 24 hour clock for the start time
-        if(endTimePMToggle.isSelected() && getHour(time) < 12){
-            return adjustedTime = (getHour(time) + 12) +":"+ getMinutes(time);
-        }else{
-            return adjustedTime = time;
-        }
-    }
+    /**
+     *
+     * @param time string representing the time portion of the date time.
+     * @return Returns an int representing the time portion of the date string with the colon removed,
+     * so that mathematical operations and be performed upon it.
+     */
     public static int removeColonFromTime(String time){
         char[] ca = time.toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -183,11 +193,21 @@ public class AddAppointmentController {
         return Integer.parseInt(number);
     }
 
+    /**
+     *
+     * @param time
+     * @return Returns the minutes portion of the time string passed in.
+     */
     public static String getMinutes(String time){
         String[] strings = time.split(":",2);
          return strings[1];
     }
 
+    /**
+     *
+     * @param time
+     * @return Returns the hours portion of the time string passed in.
+     */
     public static int getHour(String time){
         String[] strings = time.split(":",2);
         int result = Integer.parseInt(strings[0]);
@@ -195,24 +215,10 @@ public class AddAppointmentController {
         return result;
     }
 
-    public boolean togglesEmpty(){
-        boolean empty = false;
-        if(startTime.getToggles().isEmpty()){
-            startTimeAMToggle.setTextFill(Color.RED);
-            startTimePMToggle.setTextFill(Color.RED);
-            addApptErrorField.setTextFill(Color.RED);
-            addApptErrorField.setText("Please choose /'AM/' or /'PM/'");
-            empty = true;
-        }else if(endTime.getToggles().isEmpty()){
-            endTimeAMToggle.setTextFill(Color.RED);
-            endTimePMToggle.setTextFill(Color.RED);
-            addApptErrorField.setTextFill(Color.RED);
-            addApptErrorField.setText("Please choose /'AM/' or /'PM/'");
-            empty = true;
-        }
-        return empty;
-    }
 
+    /**
+     * Adds all the contact names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxContactName(){
         for(Contact c : contacts){
             contactNames.add(c.getContactName());
@@ -220,6 +226,9 @@ public class AddAppointmentController {
         addAppointmentContactNameField.setItems(contactNames);
     }
 
+    /**
+     *  Adds all the customer names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxCustomerNames(){
         for(Customer c : customers){
             customerNames.add(c.getCustomer_Name());
@@ -227,6 +236,9 @@ public class AddAppointmentController {
         addAppointmentCustIDField.setItems(customerNames);
     }
 
+    /**
+     * Adds all the user names to an Observable List of Strings and then sets the combo box with the values.
+     */
     public void populateComboBoxUserNames(){
         for(User u : users){
             userNames.add(u.getUserName());
@@ -235,14 +247,13 @@ public class AddAppointmentController {
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        JDBC.closeConnection();
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
 
+
+    /**
+     * Prepares the screen and organizes data upon opening
+     */
     public void initialize() {
         JDBC.openConnection();
         contacts = DBContacts.getAllContacts();

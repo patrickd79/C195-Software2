@@ -60,6 +60,10 @@ public class ChooseAppointmentToUpdateController {
         setTableView();
     }
 
+    /**
+     * Retrieves the data for all appointments and displays them in a table view
+     * to allow one to be chosen for editing and updating.
+     */
     public void setTableView(){
         tableView.setItems(DBAppointment.getAllAppointments());
         IDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -79,6 +83,11 @@ public class ChooseAppointmentToUpdateController {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Navigates to the window that allows the appointment to be updated.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
         apptToUpdate();
         Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("updateAppointment.fxml"));
@@ -88,6 +97,9 @@ public class ChooseAppointmentToUpdateController {
         window.show();
     }
 
+    /**
+     * Retrieves the data for the specific appointment that is selected from the table view.
+     */
     public void apptToUpdate(){
             ObservableList<Appointment> selectedAppt;
             selectedAppt = tableView.getSelectionModel().getSelectedItems();
@@ -99,14 +111,14 @@ public class ChooseAppointmentToUpdateController {
         }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        JDBC.closeConnection();
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
 
+    /**
+     * Deletes a specific appointment from the database
+     * @param event
+     * @throws IOException
+     */
     public void deleteAppointment(ActionEvent event) throws IOException {
         apptToUpdate();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

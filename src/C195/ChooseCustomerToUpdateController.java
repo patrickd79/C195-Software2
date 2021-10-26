@@ -50,6 +50,10 @@ public class ChooseCustomerToUpdateController {
 
     }
 
+    /**
+     * Retrieves the data for all of the customers in the database and
+     * displays them in the table view.
+     */
     public void setTableView(){
         tableView.setItems(DBCustomer.getAllCustomers());
         customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customer_ID"));
@@ -65,6 +69,9 @@ public class ChooseCustomerToUpdateController {
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
+    /**
+     * Retrieves the data for the selected customer so that it can be updated in the next screen.
+     */
     public void customerToUpdate() {
         ObservableList<Customer> selectedCustomer;
         selectedCustomer = tableView.getSelectionModel().getSelectedItems();
@@ -73,6 +80,12 @@ public class ChooseCustomerToUpdateController {
             name = customer.getCustomer_Name();
         }
     }
+
+    /**
+     * Deletes a customer record from the database.
+     * @param event
+     * @throws IOException
+     */
     public void deleteCustomer(ActionEvent event) throws IOException {
         customerToUpdate();
         DBAppointment.deleteAppointmentsForASingleCustomer(customerID);
@@ -90,10 +103,13 @@ public class ChooseCustomerToUpdateController {
         }else{
             deleteCustomerMessage.setText("You must select a Customer to delete first.");
         }
-
-
     }
 
+    /**
+     * Navigates to the window to update the customer selected.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateCustomerWindow(ActionEvent event) throws IOException {
         customerToUpdate();
         Parent updateCustomerWindow = FXMLLoader.load(getClass().getResource("customerUpdate.fxml"));
@@ -104,12 +120,7 @@ public class ChooseCustomerToUpdateController {
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        JDBC.closeConnection();
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
 
 

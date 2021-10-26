@@ -63,6 +63,9 @@ public class ViewAppointmentsController {
         setAllAppointmentsTableView();
     }
 
+    /**
+     * Retrieves data for all of the appointments and sets the table view with the data.
+     */
     public void setAllAppointmentsTableView(){
         tableView.setItems(DBAppointment.getAllAppointments());
         IDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
@@ -76,12 +79,15 @@ public class ViewAppointmentsController {
         createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
         lastUpdateDateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
         lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
-        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         userIDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
         contactIDCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
-
+    /**
+     * Retrieves data for all of the appointments that are scheduled for the current month
+     * and sets the table view with the data.
+     */
     public void setCurrentMonthTableView(ActionEvent event) throws IOException{
         try {
             tableView.setItems(DBAppointment.getAppointmentsByMonth());
@@ -108,7 +114,10 @@ public class ViewAppointmentsController {
             viewApptErrorField.setText("There are no appointments for the current month.");
         }
     }
-
+    /**
+     * Retrieves data for all of the appointments that are scheduled for the current week
+     * and sets the table view with the data.
+     */
     public void setCurrentWeekTableView(ActionEvent event){
         try {
             tableView.setItems(DBAppointment.getAppointmentsByWeek());
@@ -136,6 +145,9 @@ public class ViewAppointmentsController {
         }
     }
 
+    /**
+     * Adds the selected appointment to ObservableList<Appointment> selectedAppt.
+     */
     public void apptToUpdate(){
         ObservableList<Appointment> selectedAppt;
         selectedAppt = tableView.getSelectionModel().getSelectedItems();
@@ -146,6 +158,11 @@ public class ViewAppointmentsController {
         }
     }
 
+    /**
+     * Changes to the Update Appointment window to edit the appointment selected.
+     * @param event
+     * @throws IOException
+     */
     public void goToUpdateAppointmentWindow(ActionEvent event) throws IOException {
         apptToUpdate();
         Parent updateAppointmentWindow = FXMLLoader.load(getClass().getResource("updateAppointment.fxml"));
@@ -156,12 +173,7 @@ public class ViewAppointmentsController {
     }
 
     public void goToMainMenuWindow(ActionEvent event) throws IOException {
-        JDBC.closeConnection();
-        Parent mainMenu = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
-        Scene mainMenuScene = new Scene(mainMenu);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(mainMenuScene);
-        window.show();
+        Main.mainScreen.goToMain(event);
     }
 
 }
