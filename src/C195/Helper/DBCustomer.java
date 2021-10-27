@@ -33,7 +33,7 @@ public class DBCustomer {
         String update_date = TimeZones.convertToUTCTimeZone(sqlDate.toString()) ;
         System.out.println(update_date);
 
-        String sqlStmt = "UPDATE Customers " +
+        String sqlStmt = "UPDATE CUSTOMERS " +
                 "SET" +
                 " Customer_Name = '"+name+"'," +
                 " Address = '"+address+"'," +
@@ -61,7 +61,7 @@ public class DBCustomer {
      * @param id customer id
      */
     public static void deleteCustomer(String id){
-        String sqlStmt = "DELETE FROM Customers WHERE Customer_ID = "+id+";";
+        String sqlStmt = "DELETE FROM CUSTOMERS WHERE Customer_ID = "+id+";";
 
         try {
             //prepare the sql stmt
@@ -89,7 +89,7 @@ public class DBCustomer {
         java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
         String create_date = sqlDate.toString();
 
-        String sqlStmt = "Insert into Customers(Customer_Name, Address, Postal_Code, Phone, Create_Date, " +
+        String sqlStmt = "Insert into CUSTOMERS(Customer_Name, Address, Postal_Code, Phone, Create_Date, " +
                 "Created_By, Last_Update, Last_Updated_By, Division_ID)" +
                 "Values('"+name+"', '"+address+"', '"+postalCode+"', '"+phone+"', '"+TimeZones.getUTCTime()+
                 "', '"+createdBy+"', '"+TimeZones.getUTCTime()+"', '"+createdBy+"', '"+divID+"');";
@@ -114,7 +114,7 @@ public class DBCustomer {
 
         try{
             String sqlStmt = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID " +
-                    "FROM Customers WHERE Customer_Name = '"+name+"';";
+                    "FROM CUSTOMERS WHERE Customer_Name = '"+name+"';";
             PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
             ResultSet results = customerPS.executeQuery();
             while(results.next()){
@@ -151,7 +151,7 @@ public class DBCustomer {
         Customer cust = null;
         try{
             String sqlStmt = "SELECT Customer_ID, Customer_Name, Address, Postal_Code, Phone, Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID " +
-                    "FROM Customers WHERE Customer_ID = "+id+";";
+                    "FROM CUSTOMERS WHERE Customer_ID = "+id+";";
             PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
             ResultSet results = customerPS.executeQuery();
             while(results.next()){
@@ -186,7 +186,7 @@ public class DBCustomer {
         ObservableList<Customer> customerList = FXCollections.observableArrayList();
         Customer cust = null;
         try{
-            String sqlStmt = "SELECT * FROM Customers;";
+            String sqlStmt = "SELECT * FROM CUSTOMERS;";
             PreparedStatement customerPS = JDBC.getConnection().prepareStatement(sqlStmt);
             ResultSet results = customerPS.executeQuery();
 

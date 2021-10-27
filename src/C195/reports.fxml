@@ -54,7 +54,7 @@
          </font>
       </TextField>
       <Label layoutX="571.0" layoutY="223.0" prefHeight="26.0" prefWidth="192.0" text="Total Appointments for User" />
-      <Label fx:id="reportErrorMsgField" layoutX="166.0" layoutY="499.0" prefHeight="55.0" prefWidth="607.0" />
+      <Label fx:id="reportErrorMsgField" layoutX="289.0" layoutY="513.0" prefHeight="81.0" prefWidth="545.0" wrapText="true" />
       <Button fx:id="getCustomerBtn" layoutX="41.0" layoutY="134.0" mnemonicParsing="false" onAction="#getCustomerAppts" prefHeight="31.0" prefWidth="182.0" text="Retreive Customer Data" />
       <Button layoutX="667.0" layoutY="604.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" prefHeight="31.0" prefWidth="123.0" text="Go to Main Menu" />
       <ComboBox fx:id="customersCombo" layoutX="40.0" layoutY="100.0" prefHeight="27.0" prefWidth="213.0" promptText="Customers" />
