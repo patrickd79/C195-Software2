@@ -62,4 +62,42 @@ public class DBFirstLevDiv {
         return String.valueOf(divID);
     }
 
+    public static String getDivName(String divId) throws SQLException {
+        ResultSet results = null;
+        String divName = null;
+        String sqlStmt = "Select Division from FIRST_LEVEL_DIVISIONS where Division_ID = '"+divId+"';";
+        try {
+            //prepare the sql stmt
+            PreparedStatement fldPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            fldPS.execute();
+            results = fldPS.executeQuery();
+            while(results.next()) {
+                divName = results.getString("Division");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return divName;
+    }
+
+    public static String getCountryID(String divID) throws SQLException {
+        ResultSet results = null;
+        int countryID = 0;
+        String sqlStmt = "Select Country_ID from FIRST_LEVEL_DIVISIONS where Division_ID = '"+divID+"';";
+        try {
+            //prepare the sql stmt
+            PreparedStatement fldPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            fldPS.execute();
+            results = fldPS.executeQuery();
+            while(results.next()) {
+                countryID = results.getInt("Country_ID");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return String.valueOf(countryID);
+    }
+
 }

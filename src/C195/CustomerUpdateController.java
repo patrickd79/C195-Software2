@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class CustomerUpdateController {
@@ -68,7 +69,8 @@ public class CustomerUpdateController {
                 //call DBCustomer update method
                 DBCustomer.updateCustomer(customerID, name, address, postalCode, phone, updatedBy, divID);
                 updateCustErrorField.setTextFill(Color.BLACK);
-                updateCustErrorField.setText("Customer Record Created");
+                updateCustErrorField.setText("Customer Record Updated");
+                updateCustomerBtn.setDisable(true);
             } catch (Exception exception) {
                 updateCustErrorField.setTextFill(Color.RED);
                 updateCustErrorField.setText("Please complete all fields");
@@ -84,9 +86,13 @@ public class CustomerUpdateController {
      * Sets all of the text fields with the data of the selected customer.
      * @param customerID
      */
-    public void populateCustomerData(String customerID){
+    public void populateCustomerData(String customerID) throws SQLException {
         int cid = Integer.parseInt(customerID);
         Customer customer = DBCustomer.getACustomerByID(cid);
+        String divID = String.valueOf(customer.getDivisionID());
+        String countryID = DBFirstLevDiv.getCountryID(divID);
+        String countryName = DBCountries.getCountryName(countryID);
+        String divName = DBFirstLevDiv.getDivName(divID);
         updateCustIDLabel.setText(String.valueOf(customer.getCustomer_ID()));
         updateCustNameField.setText(customer.getCustomer_Name());
         updateCustAddressField.setText(customer.getAddress());
@@ -96,6 +102,8 @@ public class CustomerUpdateController {
         updateCustCreatedOn.setText(customer.getCreatedDate());
         updateCustLastUpdatedBy.setText(customer.getLastUpdatedBy());
         updateCustLastUpdateDate.setText(customer.getLastUpdate());
+        updateCustomerComboCountry.setValue(countryName);
+        updateCustomerComboDivId.setValue(divName);
 
     }
 
@@ -131,12 +139,13 @@ public class CustomerUpdateController {
         Main.mainScreen.goToMain(event);
     }
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         //JDBC.openConnection();
         countries = DBCountries.getAllCountries();
         populateComboBoxCountry();
         customerID = ChooseCustomerToUpdateController.customerID;
         populateCustomerData(customerID);
+
         System.out.println(customerID);
     }
 

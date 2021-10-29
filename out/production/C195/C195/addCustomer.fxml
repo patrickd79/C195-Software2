@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="489.0" prefWidth="633.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="C195.AddCustomerController">
+<AnchorPane prefHeight="489.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.AddCustomerController">
    <children>
       <Label layoutX="259.0" layoutY="22.0" text="Add Customer" />
       <ComboBox fx:id="addCustomerComboDivId" layoutX="379.0" layoutY="337.0" prefWidth="150.0" promptText="First Level Div" />
@@ -17,7 +17,7 @@
       <TextField fx:id="custPhoneField" layoutX="39.0" layoutY="168.0" promptText="Phone  Number" />
       <TextField fx:id="customerCreatedByField" layoutX="39.0" layoutY="255.0" promptText="Created By" />
       <Button fx:id="addCustomerBtn" layoutX="379.0" layoutY="415.0" mnemonicParsing="false" onAction="#addCustomer" text="Add Customer" />
-      <Label fx:id="addCustErrorField" layoutX="302.0" layoutY="11.0" prefHeight="39.0" prefWidth="275.0" textFill="#d80c0c" />
+      <Label fx:id="addCustErrorField" layoutX="27.0" layoutY="332.0" prefHeight="39.0" prefWidth="275.0" textFill="#d80c0c" />
       <Button layoutX="83.0" layoutY="415.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
       <TextField fx:id="custCityField" layoutX="378.0" layoutY="168.0" promptText="City" />
       <Label layoutX="43.0" layoutY="69.0" text="Name" />

@@ -38,5 +38,24 @@ public class DBCountries {
         return countryList;
     }
 
+    public static String getCountryName(String countryID) throws SQLException {
+        ResultSet results = null;
+        String countryName = null;
+        String sqlStmt = "Select Country from COUNTRIES where Country_ID = '"+countryID+"';";
+        try {
+            //prepare the sql stmt
+            PreparedStatement fldPS = JDBC.getConnection().prepareStatement(sqlStmt);
+            //execute the sql command
+            fldPS.execute();
+            results = fldPS.executeQuery();
+            while(results.next()) {
+                countryName = results.getString("Country");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return countryName;
+    }
+
 
 }

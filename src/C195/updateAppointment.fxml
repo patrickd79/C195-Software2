@@ -4,15 +4,13 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="628.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="C195.UpdateAppointmentController">
 
     <Button layoutX="559.0" layoutY="435.0" mnemonicParsing="false" onAction="#goToMainMenuWindow" text="Go To Main Menu" />
-   <Button layoutX="778.0" layoutY="435.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="30.0" prefWidth="159.0" text="Update Appointment" />
+   <Button fx:id="updateBtn" layoutX="778.0" layoutY="435.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="30.0" prefWidth="159.0" text="Update Appointment" />
    <Label layoutX="590.0" layoutY="27.0" text="Update Appointment" />
    <Label fx:id="apptIDLabel" layoutX="68.0" layoutY="85.0" text="Appointment ID" />
    <Label layoutX="70.0" layoutY="164.0" text="Title" />
@@ -33,8 +31,8 @@
    <ComboBox fx:id="contactCombo" layoutX="778.0" layoutY="307.0" prefWidth="150.0" promptText="Contact" />
    <TextField fx:id="startTimeField" layoutX="261.0" layoutY="194.0" promptText="HH:MM" />
    <TextField fx:id="endTimeField" layoutX="257.0" layoutY="293.0" promptText="HH:MM" />
-   <Label layoutX="277.0" layoutY="161.0" text="Start Time HH:MM" />
-   <Label layoutX="266.0" layoutY="270.0" text="End Time HH:MM" />
+   <Label layoutX="242.0" layoutY="161.0" text="Start Time HH:MM 24 Hr Time Only" />
+   <Label layoutX="245.0" layoutY="270.0" text="End Time HH:MM 24 Hr Time Only" />
    <TextField fx:id="titleField" layoutX="40.0" layoutY="194.0" promptText="Title" />
    <TextField fx:id="descriptionField" layoutX="34.0" layoutY="294.0" promptText="Description" />
    <TextField fx:id="locationField" layoutX="34.0" layoutY="382.0" promptText="Location" />
@@ -47,16 +45,4 @@
    <Label layoutX="68.0" layoutY="61.0" text="Appointment ID" />
    <Label layoutX="531.0" layoutY="297.0" text="Person Updating Record" />
    <TextField fx:id="updatingNowField" layoutX="522.0" layoutY="334.0" promptText="Person Updating" />
-   <RadioButton fx:id="startAMToggle" layoutX="258.0" layoutY="234.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="57.0" text="AM">
-      <toggleGroup>
-         <ToggleGroup fx:id="startToggle" />
-      </toggleGroup>
-   </RadioButton>
-   <RadioButton fx:id="startPMToggle" layoutX="323.0" layoutY="229.0" mnemonicParsing="false" text="PM" toggleGroup="$startToggle" />
-   <RadioButton fx:id="endAMToggle" layoutX="258.0" layoutY="324.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" text="AM">
-      <toggleGroup>
-         <ToggleGroup fx:id="endToggle" />
-      </toggleGroup>
-   </RadioButton>
-   <RadioButton fx:id="endPMToggle" layoutX="322.0" layoutY="324.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="57.0" text="PM" toggleGroup="$endToggle" />
 </AnchorPane>

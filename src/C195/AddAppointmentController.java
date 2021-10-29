@@ -49,6 +49,8 @@ public class AddAppointmentController {
     public ToggleGroup endTime;
     @FXML
     public RadioButton endTimePMToggle;
+    @FXML
+    public Button addApptBtn;
     ObservableList<Contact> contacts = FXCollections.observableArrayList();
     ObservableList<String> contactNames = FXCollections.observableArrayList();
     ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -77,7 +79,7 @@ public class AddAppointmentController {
                 String adjustedEndTime;
 
                 //adjust time to a 24 hour clock for the start time
-                if(startTimePMToggle.isSelected() && getHour(start) < 12){
+                /*if(startTimePMToggle.isSelected() && getHour(start) < 12){
                     adjustedStartTime = (getHour(start) + 12) +":"+ getMinutes(start);
                 }else{
                     adjustedStartTime = start;
@@ -87,12 +89,12 @@ public class AddAppointmentController {
                     adjustedEndTime = (getHour(end) + 12) +":"+ getMinutes(end);
                 }else{
                     adjustedEndTime = end;
-                }
+                }*/
                 //System.out.println("Start: "+adjustedStartTime+" End: "+adjustedEndTime);
-                String startTime = addAppointmentStartDate.getValue().toString() + " "+ adjustedStartTime;
-                String endTime = addAppointmentStartDate.getValue().toString() + " " +adjustedEndTime;
+                String startTime = addAppointmentStartDate.getValue().toString() + " "+ start;
+                String endTime = addAppointmentStartDate.getValue().toString() + " " +end;
                 if(isDuringOfficeHours(startTime, endTime) &&
-                        !customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime)){
+                        !customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime,"0")){
                     DBAppointment.addAppointment(addAppointmentTitleField.getText(), addAppointmentDescField.getText(), addAppointmentLocationField.getText(),
                             addAppointmentTypeField.getText(), startTime, endTime,
                             user.getUserName(),
@@ -100,11 +102,12 @@ public class AddAppointmentController {
                             sv.str(contact.getContactID()));
                     addApptErrorField.setTextFill(Color.BLACK);
                     addApptErrorField.setText("Appointment Created");
+                    addApptBtn.setDisable(true);
 
                 }else if(!isDuringOfficeHours(startTime, endTime)){
                     addApptErrorField.setTextFill(Color.RED);
                     addApptErrorField.setText("Please make sure that appointment time is between 0800 EST and 2200 EST.");
-                }else if(customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime)){
+                }else if(customerHasOverlappingAppointments(sv.str(customer.getCustomer_ID()),startTime, endTime,"0")){
                     addApptErrorField.setTextFill(Color.RED);
                     addApptErrorField.setText("Please change the date or time of this appointment. This appointment overlaps another one of the customer's appointments.");
                 }
@@ -148,7 +151,7 @@ public class AddAppointmentController {
      * @param endDate
      * @return Returns true if the customer has another appointment that has overlapping time with the one being passed in.
      */
-    public static boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate){
+    public static boolean customerHasOverlappingAppointments(String customerID, String startDate, String endDate, String apptID){
         ObservableList<Appointment> appts = DBAppointment.getAppointmentsForASingleCustomerByID(customerID);
         ObservableList<Date> dates = FXCollections.observableArrayList();
         Date newApptStart = TimeZones.convertStringToDate(startDate);
@@ -156,19 +159,23 @@ public class AddAppointmentController {
         Date newApptEnd = TimeZones.convertStringToDate(endDate);
         //System.out.println("customerHasOverlappingAppointments newApptEnd == "+ newApptEnd);
             for(Appointment a : appts){
-                Date oldApptStart = TimeZones.convertStringToDate(a.getStart());
-                //System.out.println("customerHasOverlappingAppointments oldApptStart == "+ oldApptStart);
-                Date oldApptEnd = TimeZones.convertStringToDate(a.getEnd());
-                //System.out.println("customerHasOverlappingAppointments oldApptEnd == "+ oldApptEnd);
-                if((newApptStart.before(oldApptEnd) &&
-                        newApptEnd.after(oldApptStart)) || newApptEnd.after(oldApptStart) && newApptStart.before(oldApptStart)){
-                    //System.out.println("customerHasOverlappingAppointments a.start == "+ a.getStart());
-                    //System.out.println("customerHasOverlappingAppointments a.end == "+ a.getEnd());
-                    //System.out.println("customerHasOverlappingAppointments == true");
-                    return true;
+                //check if it is the appointment being updated or modified
+                if(!String.valueOf(a.getAppointmentID()).equals(apptID)){
+                    Date oldApptStart = TimeZones.convertStringToDate(a.getStart());
+                    //System.out.println("customerHasOverlappingAppointments oldApptStart == "+ oldApptStart);
+                    Date oldApptEnd = TimeZones.convertStringToDate(a.getEnd());
+                    //System.out.println("customerHasOverlappingAppointments oldApptEnd == "+ oldApptEnd);
+                    if((newApptStart.before(oldApptEnd) &&
+                            newApptEnd.after(oldApptStart)) || newApptEnd.after(oldApptStart) && newApptStart.before(oldApptStart)){
+                        //System.out.println("customerHasOverlappingAppointments a.start == "+ a.getStart());
+                        //System.out.println("customerHasOverlappingAppointments a.end == "+ a.getEnd());
+                        System.out.println("customerHasOverlappingAppointments == true");
+                        return true;
+                }
+
                 }
             }
-        //System.out.println("customerHasOverlappingAppointments == false");
+        System.out.println("customerHasOverlappingAppointments == false");
             return false;
     }
 
