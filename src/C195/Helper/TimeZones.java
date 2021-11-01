@@ -35,7 +35,6 @@ public class TimeZones {
         return converted_date;
     }
 
-
     /**
      *
      * @return Returns the user's current timezone
@@ -133,5 +132,6 @@ public class TimeZones {
         }
         return date;
     }
+
 
 }
